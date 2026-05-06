@@ -1,122 +1,82 @@
-# CodeCraft Landing Page
+# 🌐 CodeCraft Landing Page
 
-Landing page for **CodeCraft** by IIE Tech Club (Ideal Institute of Engineering), built with Astro and Tailwind CSS.
+![Astro](https://img.shields.io/badge/Astro-5.0-FF5D01?style=for-the-badge&logo=astro)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript)
+![PostCSS](https://img.shields.io/badge/PostCSS-8.4-DD3A0A?style=for-the-badge&logo=postcss)
 
-The site presents event highlights, timeline, rules, submission details, organizer profiles, and contact info with a neon, futuristic UI.
+The **CodeCraft Landing Page** is the public face of the IIE Tech Club's hackathon. It features a high-impact, neon-futuristic UI designed to captivate potential participants, showcase event details, and drive registrations.
 
-## Live Demo
+---
 
-https://code-craft-landing-page-alpha.vercel.app/
+## 🛠️ Tech Stack
 
-## Tech Stack
+- **Framework**: Astro 5 (Static Site Generation)
+- **Styling**: Tailwind CSS 3 + Vanilla CSS (Custom neon effects)
+- **Interactivity**: Vanilla JS (Loader, countdown, scroll reveals)
+- **Optimization**: PostCSS & Autoprefixer
 
-- Astro 5
-- Tailwind CSS 3
-- PostCSS + Autoprefixer
-- Vanilla JS for interactive behavior (loader, countdown, reveal effects, modal interactions)
+---
 
-## Key Features
+## 📂 Repository Structure
 
-- Animated hero with countdown and glowing visual effects
-- Scroll-aware navbar and responsive menu behavior
-- Timeline section with custom curved path layout
-- Prizes, rules, and submission sections with reusable data-driven rendering
-- Organizer showcase cards
-- Contact section with quick tap-to-call links
-- Registration modal and reveal-on-scroll transitions
+| Path | Purpose |
+| :--- | :--- |
+| `src/pages/` | Entry point and main page logic (`index.astro`) |
+| `src/components/` | Reusable Astro components (e.g., `Navbar`) |
+| `src/styles/` | Global design system and section-specific styles |
+| `src/assets/` | Media assets (images, SVGs) |
+| `public/` | Static public assets |
 
-## Project Structure
+---
 
-```text
-/
-├── public/
-├── src/
-│   ├── assets/
-│   │   ├── images/
-│   │   └── svg/
-│   ├── components/
-│   │   └── Navbar.astro
-│   ├── pages/
-│   │   └── index.astro
-│   └── styles/
-│       ├── global.css
-│       ├── index.css
-│       └── nav.css
-├── astro.config.mjs
-├── tailwind.config.mjs
-├── postcss.config.mjs
-└── package.json
+## 🔄 Way of Working (Logic Flow)
+
+```mermaid
+graph TD
+    A[Public Visitor] --> B[Preloader Experience]
+    B --> C[Hero & Countdown]
+    C --> D[Timeline Discovery]
+    D --> E[Prizes & Rules Nexus]
+    E --> F[Organizer Showcase]
+    F --> G[Registration Modal]
+    G --> H[Redirect to Student Portal]
 ```
 
-## Getting Started
+---
 
-### Prerequisites
+## 🚀 Getting Started
 
-- Node.js 18+ (recommended)
-- pnpm (recommended) or npm
+1. **Install Dependencies**:
 
-### Install
+   ```bash
+   npm install
+   ```
 
-```bash
-pnpm install
-```
+2. **Run Development Server**:
 
-Or:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm install
-```
+3. **Build for Production**:
 
-### Run Development Server
+   ```bash
+   npm run build
+   ```
 
-```bash
-pnpm dev
-```
+4. **Preview Build**:
 
-Open: `http://localhost:4321`
+   ```bash
+   npm run preview
+   ```
 
-## Scripts
+---
 
-| Script | Command | Description |
-| :-- | :-- | :-- |
-| Dev | `pnpm dev` | Start local dev server |
-| Build | `pnpm build` | Build static output to `dist/` |
-| Preview | `pnpm preview` | Preview production build locally |
-| Astro CLI | `pnpm astro` | Run Astro CLI commands |
+## 📝 Content Management
 
-## Content Editing Guide
-
-Most site content is managed at the top of `src/pages/index.astro`:
-
-- `timeline` for event schedule
-- `prizes` for prize cards
-- `rules` for participation rules
-- `submissionRequirements` for submission cards
-- `organizers` for organizer profiles
-
-Layout and styling:
-
-- Core styles: `src/styles/global.css`
-- Navbar component: `src/components/Navbar.astro`
-- Design tokens: `tailwind.config.mjs`
-
-## Build and Deployment
-
-Create production build:
-
-```bash
-pnpm build
-```
-
-Preview build:
-
-```bash
-pnpm preview
-```
-
-Deploy the generated `dist/` directory to your static hosting provider.
-
-## Notes
-
-- Timeline icons can be emoji, image paths, or imported SVG components.
-- If you update timeline icon rendering logic, avoid forcing all icon types into a URL string to prevent `404` path lookups.
+Most site content is managed via constants at the top of `src/pages/index.astro`. This includes:
+- Event timeline
+- Prize pools
+- Participation rules
+- Organizer profiles

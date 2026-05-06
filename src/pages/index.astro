@@ -18,36 +18,42 @@ const timeline = [
   {
     title: "Registration Opens",
     date: "20 August",
+    isoDate: "2026-08-20",
     icon: registration,
     desc: "Sign up your team and claim your spot",
   },
   {
     title: "PPT Submission Starts",
     date: "10 September",
+    isoDate: "2026-09-10",
     icon: collaction,
     desc: "Submit your presentation slides",
   },
   {
     title: "Registration Closes",
     date: "15 September",
+    isoDate: "2026-09-15",
     icon: registration,
     desc: "Last chance to register your team",
   },
   {
     title: "PPT Submission Ends",
     date: "20 September",
+    isoDate: "2026-09-20",
     icon: collaction,
     desc: "Deadline for all submissions",
   },
   {
     title: "Project Presentation",
     date: "21 September",
+    isoDate: "2026-09-21",
     icon: presentation,
     desc: "Demo your project to the judges",
   },
   {
     title: "Award Ceremony",
     date: "25 September",
+    isoDate: "2026-09-25",
     icon: reward,
     desc: "Winners announced & prizes distributed",
   },
@@ -74,13 +80,6 @@ const timelineStops = timeline.map((item, index) => {
     tone: timelineTones[index % timelineTones.length],
   };
 });
-
-const timelineRowCount = Math.max(...timelineStops.map((s) => s.row), 1);
-const laneVariants = [
-  "timeline-lane-top",
-  "timeline-lane-middle",
-  "timeline-lane-bottom",
-];
 
 const organizers = [
   {
@@ -113,7 +112,7 @@ const organizers = [
     github: "https://github.com/Ronit77777",
     linkedin: "https://www.linkedin.com/in/ronit-banerjee-2232b61a3/",
     role:"Organizer",
-    imageUrl: ayush,
+    imageUrl: "",
   },
   {
     name: "Debankan Dutta",
@@ -459,7 +458,7 @@ const eventStructuredData = {
                   </div>
 
                   <!-- Hardware Microcontroller -->
-                  <div class="mcu-board">
+                  <div class="mcu-board" id="interactive-mcu" title="Click to Overclock">
                     <div class="mcu-core">
                       <img
                         src={logoImg.src}
@@ -489,33 +488,45 @@ const eventStructuredData = {
                   </div>
 
                   <!-- Glass Terminal overlapping -->
-                  <div class="glass-terminal">
-                    <div class="term-header">
+                  <div class="glass-terminal" id="interactive-terminal">
+                    <!-- Resize Handles -->
+                    <div class="resizer-h r-t" data-direction="t"></div>
+                    <div class="resizer-h r-r" data-direction="r"></div>
+                    <div class="resizer-h r-b" data-direction="b"></div>
+                    <div class="resizer-h r-l" data-direction="l"></div>
+                    
+                    <div class="term-header" id="term-reboot-btn" title="Click to Reboot System" style="cursor: pointer;">
                       <div class="term-btns">
                         <span></span><span></span><span></span>
                       </div>
                       <div class="term-title">bash - root@codecraft</div>
                     </div>
-                    <div class="term-body">
-                      <div class="t-line">
-                        <span class="t-prompt">root@codecraft:~#</span> ./init_hardware.sh
+                    <div class="term-body" id="term-body">
+                      <div id="term-history">
+                        <div class="t-line">
+                          <span class="t-prompt">root@codecraft:~#</span> ./init_hardware.sh
+                        </div>
+                        <div class="t-line t-process">
+                          [ OK ] Booting neural subsystem...
+                        </div>
+                        <div class="t-line t-process">
+                          [ OK ] Linking code to logic gates...
+                        </div>
+                        <div class="t-line t-process">
+                          [ OK ] Hardware synced successfully!
+                        </div>
+                        <div class="t-line">
+                          <span class="t-prompt">root@codecraft:~#</span> execute_hackathon.exe
+                        </div>
+                        <div class="t-line t-success">
+                          &gt;&gt; COMPILING INNOVATION...
+                        </div>
                       </div>
-                      <div class="t-line t-process">
-                        [ OK ] Booting neural subsystem...
+                      <div class="t-line active-prompt">
+                        <span class="t-prompt">root@codecraft:~#</span>
+                        <input type="text" id="term-input" autocomplete="off" spellcheck="false" maxlength="50" />
+                        <span class="t-cursor"></span>
                       </div>
-                      <div class="t-line t-process">
-                        [ OK ] Linking code to logic gates...
-                      </div>
-                      <div class="t-line t-process">
-                        [ OK ] Hardware synced successfully!
-                      </div>
-                      <div class="t-line">
-                        <span class="t-prompt">root@codecraft:~#</span> execute_hackathon.exe
-                      </div>
-                      <div class="t-line t-success">
-                        &gt;&gt; COMPILING INNOVATION...
-                      </div>
-                      <div class="t-cursor"></div>
                     </div>
                   </div>
 
@@ -533,6 +544,180 @@ const eventStructuredData = {
               </div>
             </div>
           </div>
+          
+          <style>
+            /* Interactive Overclock Styles */
+            #interactive-mcu {
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
+            #interactive-mcu:hover {
+              box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+            }
+            #interactive-mcu.overclocked {
+              animation: mcu-shake 0.5s infinite;
+              box-shadow: 0 0 40px rgba(255, 60, 0, 0.6), inset 0 0 20px rgba(255, 60, 0, 0.4);
+              border-color: rgba(255, 60, 0, 0.8);
+            }
+            #interactive-mcu.overclocked .mcu-logo {
+              filter: hue-rotate(-90deg) brightness(1.5) drop-shadow(0 0 10px red);
+              animation: logo-spin 1.5s linear infinite;
+            }
+            #interactive-mcu.overclocked .mcu-led {
+              animation-duration: 0.1s !important;
+              background: #ff2a00;
+              box-shadow: 0 0 15px #ff2a00;
+            }
+            #interactive-mcu.overclocked .mcu-pins i {
+              background: #ff8c42;
+              box-shadow: 0 0 5px #ff8c42;
+            }
+
+            @keyframes mcu-shake {
+              0% { transform: translate(0, 0) rotate(0deg); }
+              25% { transform: translate(1px, 1px) rotate(0.5deg); }
+              50% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+              75% { transform: translate(-1px, 1px) rotate(0deg); }
+              100% { transform: translate(1px, -1px) rotate(0.5deg); }
+            }
+            @keyframes logo-spin {
+              0% { transform: rotate(0deg) scale(1.1); }
+              100% { transform: rotate(360deg) scale(1.1); }
+            }
+            
+            #term-reboot-btn:hover {
+              background: rgba(0, 242, 254, 0.1);
+            }
+
+            /* Interactive Terminal Styles */
+            .term-body {
+              display: flex;
+              flex-direction: column;
+              height: 220px;
+              overflow-y: auto;
+              scrollbar-width: none;
+              scroll-behavior: smooth;
+            }
+            .term-body::-webkit-scrollbar {
+              display: none;
+            }
+            .active-prompt {
+              display: flex !important;
+              align-items: center !important;
+              gap: 8px !important;
+              opacity: 1 !important;
+              visibility: visible !important;
+            }
+            #term-input {
+              background: transparent;
+              border: none;
+              color: var(--c-cyan);
+              font-family: var(--font-mono);
+              font-size: 0.8rem;
+              outline: none;
+              width: 2px; /* starts small */
+              min-width: 2px;
+              padding: 0;
+              margin: 0;
+              caret-color: transparent;
+              text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+              flex: 0 1 auto; /* don't grow */
+            }
+            .t-cursor {
+              display: inline-block;
+              width: 8px;
+              height: 14px;
+              background: var(--c-cyan);
+              animation: term-blink 1s step-end infinite;
+              flex-shrink: 0;
+              box-shadow: 0 0 8px var(--c-cyan);
+              margin-left: -2px; /* overlap slightly for better look */
+            }
+            @keyframes term-blink {
+              50% { opacity: 0; }
+            }
+            .command-output {
+              color: #94a3b8;
+              margin-bottom: 0.5rem;
+              font-size: 0.75rem;
+              line-height: 1.4;
+              padding-left: 4px;
+              border-left: 1px solid rgba(0, 242, 254, 0.1);
+            }
+            .term-shake {
+              animation: term-shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+            }
+            @keyframes term-shake {
+              10%, 90% { transform: translate3d(-1px, 0, 0); }
+              20%, 80% { transform: translate3d(2px, 0, 0); }
+              30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+              40%, 60% { transform: translate3d(4px, 0, 0); }
+            }
+            #page-shell.critical-state {
+              background-color: rgba(255, 42, 0, 0.05);
+              transition: background-color 0.5s ease;
+            }
+
+            /* Terminal Resizer Styles */
+            .glass-terminal {
+              min-width: 280px;
+              min-height: 200px;
+              max-width: 90vw;
+              max-height: 80vh;
+              position: absolute !important;
+            }
+            .resizer-h {
+              position: absolute;
+              z-index: 10;
+            }
+            .resizer-h.r-t { top: -4px; left: 0; right: 0; height: 8px; cursor: ns-resize; }
+            .resizer-h.r-r { top: 0; bottom: 0; right: -4px; width: 8px; cursor: ew-resize; }
+            .resizer-h.r-b { bottom: -4px; left: 0; right: 0; height: 8px; cursor: ns-resize; }
+            .resizer-h.r-l { top: 0; bottom: 0; left: -4px; width: 8px; cursor: ew-resize; }
+            
+            .resizer-h:hover {
+              background: rgba(0, 242, 254, 0.2);
+            }
+
+            /* New Glitch Reveal Animation */
+            .glitch-reveal {
+              opacity: 0;
+              transform: translateY(10px);
+              filter: blur(5px);
+            }
+            .in-view .glitch-reveal,
+            .glitch-reveal.in-view {
+              animation: glitch-reveal-anim 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+
+            @keyframes glitch-reveal-anim {
+              0% {
+                opacity: 0;
+                transform: translateY(20px) skewX(10deg);
+                filter: blur(10px);
+              }
+              20% {
+                opacity: 0.5;
+                transform: translateY(-5px) skewX(-5deg);
+                filter: blur(2px);
+              }
+              40% {
+                opacity: 0.3;
+                transform: translateY(2px) skewX(2deg);
+              }
+              60% {
+                opacity: 0.8;
+                transform: translateY(0) skewX(0);
+                filter: blur(0);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+                text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+              }
+            }
+          </style>
         </section>
 
         <!-- ── Stats bar ── -->
@@ -564,7 +749,11 @@ const eventStructuredData = {
           </div>
         </div>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ ABOUT ══ -->
         <section class="section" id="about" aria-labelledby="about-title">
@@ -609,14 +798,18 @@ const eventStructuredData = {
           </div>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ PRIZES ══ -->
         <section class="section" id="prizes" aria-labelledby="prizes-title">
           <div class="wrap">
             <div class="section-header reveal">
               <p class="section-kicker">Rewards</p>
-              <h2 class="section-title" id="prizes-title">Prize Pool</h2>
+              <h2 class="section-title glitch-reveal" id="prizes-title" data-no-scramble>Prize Pool</h2>
               <p class="section-sub">
                 Total Prize Pool: ₹3,500 + Certificates for all participants
               </p>
@@ -648,102 +841,511 @@ const eventStructuredData = {
           </div>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ TIMELINE ══ -->
-        <section class="section" id="timeline" aria-labelledby="timeline-title">
+        <section class="section tl-section" id="timeline" aria-labelledby="timeline-title">
           <div class="wrap">
             <div class="section-header reveal">
               <p class="section-kicker">Schedule</p>
-              <h2 class="section-title" id="timeline-title">Event Timeline</h2>
-              <p class="section-sub">Key dates to keep in your calendar</p>
+              <h2 class="section-title glitch-reveal" id="timeline-title" data-no-scramble>Event Timeline</h2>
+              <p class="section-sub">Key mission checkpoints — track your progress</p>
             </div>
 
-            <!-- Desktop horizontal pipeline -->
-            <div class="codecraft-timeline-hz reveal hide-on-mobile">
-              <div class="hz-track" aria-hidden="true">
-                <span class="hz-track-seg hz-zig hz-zig-1"></span>
-                <span class="hz-track-seg hz-zig hz-zig-2"></span>
-                <span class="hz-track-seg hz-zig hz-zig-3"></span>
-                <span class="hz-track-seg hz-zig hz-zig-4"></span>
-                <span class="hz-track-seg hz-zig hz-zig-5"></span>
-              </div>
-              <div class="hz-nodes">
-                {
-                  timelineStops.map((item, index) => {
-                    const isUp = index % 2 === 0;
-                    const iconValue = item.icon;
-                    const isStringIcon = typeof iconValue === "string";
-                    const isEmojiIcon =
-                      isStringIcon && [...iconValue].length <= 3;
-                    const IconComponent = item.icon;
+            <!-- ── DESKTOP: Horizontal Progress Pipeline ── -->
+            <div class="tl-pipeline reveal hide-on-mobile" id="tl-pipeline" aria-label="Event timeline">
+              <!-- Nodes along the tube -->
+              <div class="tl-nodes">
+                <!-- The glowing progress tube -->
+                <div class="tl-tube" aria-hidden="true">
+                  <div class="tl-tube-fill" id="tl-tube-fill"></div>
+                  <div class="tl-tube-glow"></div>
+                </div>
 
-                    return (
-                      <div class={`hz-item ${isUp ? "hz-up" : "hz-down"}`}>
-                        <article class="hz-content">
-                          <p class="hz-date">{item.date}</p>
-                          <h3 class="hz-title">{item.title}</h3>
-                          <p class="hz-desc">{item.desc}</p>
-                        </article>
-                        <div class={`hz-dot tone-${item.tone}`}>
-                          <div class="hz-icon">
-                            {isEmojiIcon ? (
-                              <span>{iconValue}</span>
-                            ) : isStringIcon ? (
-                              <img src={iconValue} alt="" loading="lazy" />
-                            ) : (
-                              <IconComponent />
-                            )}
+                {
+                  timelineStops.map((item, index) => (
+                    <div class="tl-node-wrap" data-tl-index={index} data-iso-date={item.isoDate}>
+                      <!-- Node marker on the pipe -->
+                      <div class={`tl-node-pip tone-${item.tone}`}>
+                        <div class="tl-node-pulse"></div>
+                        <span class="tl-node-num">{String(index + 1).padStart(2,'0')}</span>
+                      </div>
+
+                      <!-- Info card — alternates above/below -->
+                      <div class={`tl-info-card ${index % 2 === 0 ? 'card-above' : 'card-below'}`}>
+                        <div class="tl-card-connector" aria-hidden="true"></div>
+                        <div class="tl-card-inner">
+                          <div class="tl-card-top">
+                            <span class="tl-card-date">{item.date}</span>
+                            <span class={`tl-card-status tone-${item.tone}`}>PENDING</span>
                           </div>
+                          <h3 class="tl-card-title">{item.title}</h3>
+                          <p class="tl-card-desc">{item.desc}</p>
                         </div>
                       </div>
-                    );
-                  })
+                    </div>
+                  ))
                 }
+              </div>
+
+              <!-- Bottom progress label -->
+              <div class="tl-progress-meta" aria-hidden="true">
+                <span class="tl-prog-label">MISSION PROGRESS</span>
+                <span class="tl-prog-pct" id="tl-pct">0%</span>
               </div>
             </div>
 
-            <!-- Mobile vertical timeline -->
-            <div class="timeline-mobile reveal show-on-mobile">
+            <!-- ── MOBILE: Vertical Sequential Steps ── -->
+            <div class="tl-mobile-v show-on-mobile" id="tl-mobile" aria-label="Event timeline mobile">
+              <div class="tl-v-spine" aria-hidden="true">
+                <div class="tl-v-fill" id="tl-v-fill"></div>
+              </div>
+
               {
-                timelineStops.map((item) => {
-                  const iconValue = item.icon;
-                  const isStringIcon = typeof iconValue === "string";
-                  const isEmojiIcon =
-                    isStringIcon && [...iconValue].length <= 3;
-                  const IconComponent = item.icon;
-                  return (
-                    <div class="tl-stop">
-                      <div class={`tl-node tone-${item.tone}`}>
-                        {isEmojiIcon ? (
-                          <span style="font-size:0.9rem;">{iconValue}</span>
-                        ) : isStringIcon ? (
-                          <img src={iconValue} alt="" loading="lazy" />
-                        ) : (
-                          <IconComponent />
-                        )}
-                      </div>
-                      <div class="tl-content">
-                        <h3 class="tl-title">{item.title}</h3>
-                        <p class="tl-date">{item.date}</p>
-                        <p class="tl-desc">{item.desc}</p>
-                      </div>
+                timelineStops.map((item, index) => (
+                  <div class={`tl-v-step`} data-tl-v-index={index} data-iso-date={item.isoDate}>
+                    <div class={`tl-v-node tone-${item.tone}`}>
+                      <span>{String(index + 1).padStart(2,'0')}</span>
+                      <div class="tl-v-pulse"></div>
                     </div>
-                  );
-                })
+                    <div class="tl-v-card">
+                      <div class="tl-v-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
+                        <div class="tl-v-date">{item.date}</div>
+                        <span class={`tl-v-status tl-card-status tone-${item.tone}`} style="font-size: 0.5rem; opacity: 0; padding: 2px 5px; border-radius: 2px; font-family: var(--font-mono); letter-spacing: 0.12em;">PENDING</span>
+                      </div>
+                      <h3 class="tl-v-title">{item.title}</h3>
+                      <p class="tl-v-desc">{item.desc}</p>
+                    </div>
+                  </div>
+                ))
               }
             </div>
+
           </div>
+
+          <!-- Inline styles for the new timeline -->
+          <style>
+            /* ─── TIMELINE WRAPPER ─── */
+            .tl-section {
+              padding-block: clamp(4rem, 10vw, 7rem);
+              overflow: hidden;
+            }
+
+            /* ─── DESKTOP PIPELINE ─── */
+            .tl-pipeline {
+              position: relative;
+              padding-block: 180px 200px;
+              margin-top: 2rem;
+            }
+
+            /* The actual tube / track */
+            .tl-tube {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              right: 0;
+              height: 4px;
+              background: rgba(0, 242, 254, 0.08);
+              border: 1px solid rgba(0, 242, 254, 0.15);
+              transform: translateY(-50%);
+              z-index: 0;
+              border-radius: 2px;
+              overflow: visible;
+            }
+
+            .tl-tube-fill {
+              height: 100%;
+              width: 0%;
+              background: linear-gradient(90deg, #00f2fe, #4facfe, #8e2de2);
+              border-radius: 2px;
+              transition: width 0.05s linear;
+              box-shadow: 0 0 12px rgba(0, 242, 254, 0.7), 0 0 30px rgba(79, 172, 254, 0.4);
+            }
+
+            .tl-tube-glow {
+              position: absolute;
+              inset: -4px -2px;
+              background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.05), transparent);
+              filter: blur(6px);
+            }
+
+            /* Nodes container */
+            .tl-nodes {
+              position: relative;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              z-index: 1;
+            }
+
+            /* Individual node wrapper */
+            .tl-node-wrap {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              flex: 1;
+            }
+
+            /* Circle pip on pipe */
+            .tl-node-pip {
+              width: 44px;
+              height: 44px;
+              border-radius: 50%;
+              background: #02040a;
+              border: 2px solid rgba(0, 242, 254, 0.25);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: relative;
+              z-index: 2;
+              cursor: pointer;
+              transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+            }
+
+            .tl-node-pip.tone-cyan { --node-color: #00f2fe; }
+            .tl-node-pip.tone-blue { --node-color: #4facfe; }
+            .tl-node-pip.tone-orange { --node-color: #ff8c42; }
+            .tl-node-pip.tone-purple { --node-color: #8e2de2; }
+
+            .tl-node-pip.node-active {
+              border-color: var(--node-color, #00f2fe);
+              box-shadow: inset 0 0 12px rgba(0, 242, 254, 0.15), 0 0 0 4px rgba(0, 242, 254, 0.15), 0 0 20px var(--node-color, #00f2fe);
+              transform: scale(1.15);
+              background: #02040a;
+            }
+
+            .tl-node-num {
+              font-family: var(--font-mono);
+              font-size: 0.6rem;
+              color: rgba(0, 242, 254, 0.4);
+              letter-spacing: 0.05em;
+              transition: color 0.4s;
+            }
+
+            .tl-node-pip.node-active .tl-node-num {
+              color: var(--node-color, #00f2fe);
+            }
+
+            .tl-node-pulse {
+              position: absolute;
+              inset: -6px;
+              border-radius: 50%;
+              border: 1px solid var(--node-color, #00f2fe);
+              opacity: 0;
+              animation: none;
+              transition: opacity 0.3s;
+            }
+
+            .tl-node-pip.node-active .tl-node-pulse {
+              opacity: 1;
+              animation: tl-pulse-ring 1.5s ease-out infinite;
+            }
+
+            @keyframes tl-pulse-ring {
+              0% { transform: scale(1); opacity: 0.8; }
+              100% { transform: scale(1.6); opacity: 0; }
+            }
+
+            /* Info card */
+            .tl-info-card {
+              position: absolute;
+              width: 155px;
+              left: 50%;
+              transform: translateX(-50%);
+              opacity: 0;
+              transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+
+            .card-above {
+              bottom: calc(100% + 40px);
+              transform: translateX(-50%) translateY(10px);
+            }
+
+            .card-below {
+              top: calc(100% + 40px);
+              transform: translateX(-50%) translateY(-10px);
+            }
+
+            .tl-info-card.card-visible {
+              opacity: 1;
+            }
+            .card-above.card-visible { transform: translateX(-50%) translateY(0); }
+            .card-below.card-visible { transform: translateX(-50%) translateY(0); }
+
+            .tl-card-connector {
+              position: absolute;
+              left: 50%;
+              width: 1px;
+              background: linear-gradient(to top, rgba(0, 242, 254, 0.4), transparent);
+              transform: translateX(-50%);
+            }
+            .card-above .tl-card-connector {
+              top: 100%;
+              height: 40px;
+              background: linear-gradient(to bottom, rgba(0, 242, 254, 0.4), transparent);
+            }
+            .card-below .tl-card-connector {
+              bottom: 100%;
+              height: 40px;
+            }
+
+            .tl-card-inner {
+              background: rgba(4, 10, 20, 0.9);
+              border: 1px solid rgba(0, 242, 254, 0.2);
+              border-radius: 4px;
+              padding: 0.75rem;
+              backdrop-filter: blur(10px);
+              position: relative;
+              overflow: hidden;
+              transition: border-color 0.4s;
+            }
+
+            .tl-info-card.card-visible .tl-card-inner {
+              border-color: rgba(0, 242, 254, 0.35);
+            }
+
+            /* Corner accents on card */
+            .tl-card-inner::before {
+              content: '';
+              position: absolute;
+              top: 0; left: 0;
+              width: 10px; height: 10px;
+              border-top: 1.5px solid rgba(0, 242, 254, 0.6);
+              border-left: 1.5px solid rgba(0, 242, 254, 0.6);
+            }
+            .tl-card-inner::after {
+              content: '';
+              position: absolute;
+              bottom: 0; right: 0;
+              width: 10px; height: 10px;
+              border-bottom: 1.5px solid rgba(0, 242, 254, 0.25);
+              border-right: 1.5px solid rgba(0, 242, 254, 0.25);
+            }
+
+            .tl-card-top {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 0.4rem;
+            }
+
+            .tl-card-date {
+              font-family: var(--font-mono);
+              font-size: 0.58rem;
+              color: rgba(0, 242, 254, 0.7);
+              letter-spacing: 0.08em;
+            }
+
+            .tl-card-status {
+              font-family: var(--font-mono);
+              font-size: 0.5rem;
+              letter-spacing: 0.12em;
+              padding: 2px 5px;
+              border-radius: 2px;
+            }
+
+            .tl-card-status.tone-cyan { color: #00f2fe; background: rgba(0, 242, 254, 0.1); }
+            .tl-card-status.tone-blue { color: #4facfe; background: rgba(79, 172, 254, 0.1); }
+            .tl-card-status.tone-orange { color: #ff8c42; background: rgba(255, 140, 66, 0.1); }
+            .tl-card-status.tone-purple { color: #8e2de2; background: rgba(142, 45, 226, 0.1); }
+
+            .tl-card-title {
+              font-family: var(--font-mono);
+              font-size: 0.72rem;
+              color: #e2e8f0;
+              letter-spacing: 0.04em;
+              margin: 0 0 0.3rem;
+              text-transform: uppercase;
+              line-height: 1.3;
+            }
+
+            .tl-card-desc {
+              font-size: 0.65rem;
+              color: rgba(148, 163, 184, 0.8);
+              line-height: 1.5;
+              margin: 0;
+            }
+
+            /* Progress meta bar */
+            .tl-progress-meta {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-top: 0.5rem;
+              font-family: var(--font-mono);
+              font-size: 0.6rem;
+              color: rgba(0, 242, 254, 0.5);
+              letter-spacing: 0.15em;
+            }
+
+            .tl-prog-pct {
+              color: #00f2fe;
+              font-weight: bold;
+              font-size: 0.75rem;
+              text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            }
+
+            /* ─── MOBILE VERTICAL ─── */
+            .tl-mobile-v {
+              position: relative;
+              padding-left: 3rem;
+              display: flex;
+              flex-direction: column;
+              gap: 0;
+            }
+
+            .tl-v-spine {
+              position: absolute;
+              left: calc(1rem + 17px);
+              top: 1.5rem;
+              bottom: 1.5rem;
+              width: 2px;
+              background: rgba(0, 242, 254, 0.1);
+              border-radius: 2px;
+              overflow: hidden;
+            }
+
+            .tl-v-fill {
+              width: 100%;
+              height: 0%;
+              background: linear-gradient(to bottom, #00f2fe, #4facfe, #8e2de2);
+              border-radius: 2px;
+              transition: height 0.05s linear;
+              box-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+            }
+
+            .tl-v-step {
+              display: flex;
+              align-items: flex-start;
+              gap: 1.25rem;
+              padding-block: 1.25rem;
+              position: relative;
+              opacity: 0;
+              transform: translateX(-15px);
+              transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+
+            .tl-v-step.step-visible {
+              opacity: 1;
+              transform: translateX(0);
+            }
+
+            .tl-v-node {
+              position: absolute;
+              left: -2rem;
+              top: 1.4rem;
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              background: #02040a;
+              border: 2px solid rgba(0, 242, 254, 0.2);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              z-index: 2;
+              transition: border-color 0.4s, box-shadow 0.4s;
+            }
+
+            .tl-v-node.tone-cyan { --v-color: #00f2fe; }
+            .tl-v-node.tone-blue { --v-color: #4facfe; }
+            .tl-v-node.tone-orange { --v-color: #ff8c42; }
+            .tl-v-node.tone-purple { --v-color: #8e2de2; }
+
+            .tl-v-node.node-active {
+              border-color: var(--v-color, #00f2fe);
+              box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.12), 0 0 0 3px rgba(0, 242, 254, 0.12), 0 0 15px var(--v-color, #00f2fe);
+              background: #02040a;
+            }
+
+            .tl-v-node span {
+              font-family: var(--font-mono);
+              font-size: 0.55rem;
+              color: rgba(0, 242, 254, 0.4);
+              transition: color 0.4s;
+            }
+            .tl-v-node.node-active span { color: var(--v-color, #00f2fe); }
+
+            .tl-v-pulse {
+              position: absolute;
+              inset: -5px;
+              border-radius: 50%;
+              border: 1px solid var(--v-color, #00f2fe);
+              opacity: 0;
+            }
+            .tl-v-node.node-active .tl-v-pulse {
+              opacity: 1;
+              animation: tl-pulse-ring 1.5s ease-out infinite;
+            }
+
+            .tl-v-card {
+              background: rgba(4, 10, 20, 0.7);
+              border: 1px solid rgba(0, 242, 254, 0.15);
+              border-radius: 4px;
+              padding: 1rem 1.1rem;
+              flex: 1;
+              position: relative;
+              overflow: hidden;
+              transition: border-color 0.4s;
+            }
+
+            .tl-v-step.step-visible .tl-v-card {
+              border-color: rgba(0, 242, 254, 0.3);
+            }
+
+            .tl-v-date {
+              font-family: var(--font-mono);
+              font-size: 0.6rem;
+              color: rgba(0, 242, 254, 0.6);
+              letter-spacing: 0.1em;
+              margin-bottom: 0.35rem;
+            }
+
+            .tl-v-title {
+              font-family: var(--font-mono);
+              font-size: 0.85rem;
+              color: #e2e8f0;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              margin: 0 0 0.4rem;
+            }
+
+            .tl-v-desc {
+              font-size: 0.78rem;
+              color: #94a3b8;
+              line-height: 1.6;
+              margin: 0;
+            }
+
+            /* Show/hide helpers */
+            @media (max-width: 768px) {
+              .hide-on-mobile { display: none !important; }
+              .show-on-mobile { display: flex !important; }
+            }
+            @media (min-width: 769px) {
+              .show-on-mobile { display: none !important; }
+              .hide-on-mobile { display: block !important; }
+            }
+          </style>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ RULES ══ -->
         <section class="section" id="rules" aria-labelledby="rules-title">
           <div class="wrap">
             <div class="section-header reveal">
               <p class="section-kicker">Participation Rules</p>
-              <h2 class="section-title" id="rules-title">System Protocols</h2>
+              <h2 class="section-title glitch-reveal" id="rules-title" data-no-scramble>System Protocols</h2>
               <p class="section-sub">
                 Keep your team eligible by following the core CODECRAFT event
                 requirements.
@@ -776,7 +1378,11 @@ const eventStructuredData = {
           </div>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ SUBMISSION ══ -->
         <section
@@ -787,7 +1393,7 @@ const eventStructuredData = {
           <div class="wrap">
             <div class="section-header reveal">
               <p class="section-kicker">Deliverables</p>
-              <h2 class="section-title" id="submission-title">
+              <h2 class="section-title glitch-reveal" id="submission-title" data-no-scramble>
                 Submission Requirements
               </h2>
               <p class="section-sub">
@@ -867,7 +1473,11 @@ const eventStructuredData = {
           </div>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ ORGANIZERS ══ -->
         <section
@@ -878,7 +1488,7 @@ const eventStructuredData = {
           <div class="wrap">
             <div class="section-header reveal">
               <p class="section-kicker">The Team</p>
-              <h2 class="section-title" id="organizers-title">
+              <h2 class="section-title glitch-reveal" id="organizers-title" data-no-scramble>
                 Meet the Organizers
               </h2>
               <p class="section-sub">
@@ -957,12 +1567,16 @@ const eventStructuredData = {
           </div>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="section-divider">
+          <div class="branch-wire left"></div>
+          <div class="hardware-node"></div>
+          <div class="branch-wire right"></div>
+        </div>
 
         <!-- ══════════════════════════════════════════════ CONTACT ══ -->
         <section class="section" id="contact" aria-labelledby="contact-title">
           <div class="wrap">
-            <div class="support-terminal reveal">
+            <div class="support-terminal">
               <div class="st-header">
                 <span class="st-dot r"></span><span class="st-dot y"
                 ></span><span class="st-dot g"></span>
@@ -1033,6 +1647,14 @@ const eventStructuredData = {
     <!-- ══════════════════════════════════════════════ MODAL REMOVED ══ -->
 
     <script is:inline>
+      // ── Apply Interactive Attributes Dynamically
+      document.querySelectorAll('.core-module, .bounty-card, .org-card, .mcu-board, .glass-terminal, .payload-card').forEach(el => {
+        el.setAttribute('data-tilt', '');
+      });
+      document.querySelectorAll('.btn-primary, .btn-ghost, .comm-link, .org-social').forEach(el => {
+        el.setAttribute('data-magnetic', '');
+      });
+
       // ── Scroll-to
       document.querySelectorAll("[data-scroll-to]").forEach((b) => {
         b.addEventListener("click", () => {
@@ -1056,6 +1678,167 @@ const eventStructuredData = {
       document
         .querySelectorAll(".reveal, .reveal-stagger")
         .forEach((el) => ro.observe(el));
+
+      // ── Timeline Progress Pipeline Animation
+      (() => {
+        const pipeline = document.getElementById('tl-pipeline');
+        const tubeFill = document.getElementById('tl-tube-fill');
+        const pctLabel = document.getElementById('tl-pct');
+        const nodeWraps = document.querySelectorAll('.tl-node-wrap');
+        const totalNodes = nodeWraps.length;
+
+        // Desktop: activate when section in view, then animate tube + nodes
+        if (pipeline && tubeFill) {
+          const pipelineObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              pipelineObserver.disconnect();
+              
+              // Calculate real-time statuses
+              const now = new Date();
+              const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+              let firstUpcomingFound = false;
+
+              nodeWraps.forEach((wrap, i) => {
+                const pip = wrap.querySelector('.tl-node-pip');
+                const card = wrap.querySelector('.tl-info-card');
+                const statusEl = wrap.querySelector('.tl-card-status');
+                const isoDate = wrap.getAttribute('data-iso-date');
+                const eventDate = new Date(isoDate + "T00:00:00").getTime();
+
+                setTimeout(() => {
+                  // Activate node
+                  pip?.classList.add('node-active');
+                  // Reveal card with slide
+                  card?.classList.add('card-visible');
+                  
+                  // Update status tag based on real dates
+                  if (statusEl) {
+                    if (today > eventDate) {
+                      statusEl.textContent = 'COMPLETE';
+                    } else if (today === eventDate) {
+                      statusEl.textContent = 'IN PROGRESS';
+                    } else {
+                      if (!firstUpcomingFound) {
+                        statusEl.textContent = 'ABOUT TO START';
+                        firstUpcomingFound = true;
+                      } else {
+                        statusEl.textContent = 'UPCOMING';
+                      }
+                    }
+                    statusEl.style.opacity = '1';
+                  }
+
+                  // Grow the tube fill smoothly to this node's position
+                  const targetPct = i === 0 ? 0 : (i / (totalNodes - 1)) * 100;
+                  const startPct = i === 0 ? 0 : ((i - 1) / (totalNodes - 1)) * 100;
+                  let cur = startPct;
+                  const interval = setInterval(() => {
+                    cur = Math.min(cur + 1, targetPct);
+                    if (tubeFill) tubeFill.style.width = cur + '%';
+                    if (pctLabel) pctLabel.textContent = Math.round(cur) + '%';
+                    if (cur >= targetPct) clearInterval(interval);
+                  }, 12);
+
+                }, i * 350);
+              });
+            }
+          }, { threshold: 0.4 });
+
+          pipelineObserver.observe(pipeline);
+        }
+
+        // Mobile: step-by-step reveal as each step scrolls in
+        const vSteps = document.querySelectorAll('.tl-v-step');
+        const vFill = document.getElementById('tl-v-fill');
+        const vTotalSteps = vSteps.length;
+        let vActiveCount = 0;
+        
+        // Calculate real-time statuses for mobile
+        const nowM = new Date();
+        const todayM = new Date(nowM.getFullYear(), nowM.getMonth(), nowM.getDate()).getTime();
+        let firstUpcomingFoundM = false;
+
+        const mobileStepObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const step = entry.target;
+              const idx = parseInt(step.getAttribute('data-tl-v-index') || '0');
+              const isoDate = step.getAttribute('data-iso-date');
+              const eventDate = new Date(isoDate + "T00:00:00").getTime();
+              const statusEl = step.querySelector('.tl-v-status');
+              
+              step.classList.add('step-visible');
+              
+              const node = step.querySelector('.tl-v-node');
+              node?.classList.add('node-active');
+
+              // Update mobile status
+              if (statusEl) {
+                if (todayM > eventDate) {
+                  statusEl.textContent = 'COMPLETE';
+                } else if (todayM === eventDate) {
+                  statusEl.textContent = 'IN PROGRESS';
+                } else {
+                  // We need to check globally for mobile to find the first upcoming
+                  // Since we are in an observer per step, we can check based on sorted indices
+                  // But for simplicity, we'll use a slightly different approach here
+                  // or just recalculate based on the index.
+                  
+                  // Simple check: if index is the first one that is > today
+                  let isFirst = true;
+                  for(let j=0; j < idx; j++) {
+                    const prevStep = vSteps[j];
+                    const prevDate = new Date(prevStep.getAttribute('data-iso-date') + "T00:00:00").getTime();
+                    if (prevDate >= todayM) {
+                      isFirst = false;
+                      break;
+                    }
+                  }
+                  
+                  if (isFirst) {
+                    statusEl.textContent = 'ABOUT TO START';
+                  } else {
+                    statusEl.textContent = 'UPCOMING';
+                  }
+                }
+                statusEl.style.opacity = '1';
+              }
+
+              vActiveCount = Math.max(vActiveCount, idx + 1);
+              if (vFill) {
+                const fillPct = (vActiveCount / vTotalSteps) * 100;
+                vFill.style.height = fillPct + '%';
+              }
+
+              mobileStepObserver.unobserve(step);
+            }
+          });
+        }, { threshold: 0.6 });
+
+        vSteps.forEach(step => mobileStepObserver.observe(step));
+
+        // Adjust spine height to end exactly at the last node's center
+        const adjustMobileSpine = () => {
+          const mobileCont = document.getElementById('tl-mobile');
+          const spine = mobileCont?.querySelector('.tl-v-spine');
+          const lastStep = vSteps[vSteps.length - 1];
+          const lastNode = lastStep?.querySelector('.tl-v-node');
+          
+          if (mobileCont && spine && lastNode) {
+            const contRect = mobileCont.getBoundingClientRect();
+            const nodeRect = lastNode.getBoundingClientRect();
+            // Distance from container top to the exact center of the last node
+            const centerDistance = (nodeRect.top - contRect.top) + (nodeRect.height / 2);
+            const topOffset = parseFloat(getComputedStyle(spine).top) || 24;
+            
+            spine.style.bottom = 'auto';
+            spine.style.height = `${centerDistance - topOffset}px`;
+          }
+        };
+        
+        window.addEventListener('resize', adjustMobileSpine);
+        setTimeout(adjustMobileSpine, 150);
+      })();
 
       // ── Counter animation
       const animateCount = (node) => {
@@ -1096,19 +1879,445 @@ const eventStructuredData = {
           return;
         }
         const s = Math.floor(diff / 1000);
-        document.getElementById("cd-days").textContent = pad(
-          Math.floor(s / 86400),
-        );
-        document.getElementById("cd-hours").textContent = pad(
-          Math.floor((s % 86400) / 3600),
-        );
-        document.getElementById("cd-mins").textContent = pad(
-          Math.floor((s % 3600) / 60),
-        );
-        document.getElementById("cd-secs").textContent = pad(s % 60);
+        const elDays = document.getElementById("cd-days");
+        const elHours = document.getElementById("cd-hours");
+        const elMins = document.getElementById("cd-mins");
+        const elSecs = document.getElementById("cd-secs");
+        
+        if (elDays) elDays.textContent = pad(Math.floor(s / 86400));
+        if (elHours) elHours.textContent = pad(Math.floor((s % 86400) / 3600));
+        if (elMins) elMins.textContent = pad(Math.floor((s % 3600) / 60));
+        if (elSecs) elSecs.textContent = pad(s % 60);
       };
       updateCD();
       setInterval(updateCD, 1000);
+
+      // ── 3D Tilt Effect
+      document.querySelectorAll('[data-tilt]').forEach(el => {
+        // Only apply on desktop
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+        
+        el.addEventListener('mousemove', e => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+          
+          el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          el.style.transition = 'transform 0.1s ease';
+          
+          // Dynamic shine effect
+          if(!el.querySelector('.tilt-shine')) {
+            const shine = document.createElement('div');
+            shine.className = 'tilt-shine';
+            shine.style.position = 'absolute';
+            shine.style.inset = '0';
+            shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.15) 0%, transparent 60%)';
+            shine.style.pointerEvents = 'none';
+            shine.style.zIndex = '10';
+            shine.style.opacity = '0';
+            shine.style.transition = 'opacity 0.3s';
+            shine.style.borderRadius = 'inherit';
+            
+            // Check if element is relatively positioned
+            const style = window.getComputedStyle(el);
+            if (style.position === 'static') {
+              el.style.position = 'relative';
+            }
+            
+            el.appendChild(shine);
+          }
+          
+          const shine = el.querySelector('.tilt-shine');
+          if(shine) {
+            shine.style.opacity = '1';
+            shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 242, 254, 0.2) 0%, transparent 60%)`;
+          }
+        });
+        
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = '';
+          el.style.transition = 'transform 0.5s ease';
+          const shine = el.querySelector('.tilt-shine');
+          if(shine) shine.style.opacity = '0';
+        });
+      });
+
+      // ── Magnetic Buttons
+      document.querySelectorAll('[data-magnetic]').forEach(btn => {
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+        
+        btn.addEventListener('mousemove', e => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0px, 0px)';
+        });
+      });
+
+      // ── Scramble Text Effect on Scroll (for Headings)
+      const scrambleObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const heading = entry.target;
+            heading.classList.add('glitch-active');
+            let iterations = 0;
+            const originalText = heading.getAttribute('data-text') || heading.innerText;
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+            
+            clearInterval(heading.glitchInterval);
+            heading.glitchInterval = setInterval(() => {
+              heading.innerText = originalText.split("").map((letter, index) => {
+                if(index < iterations) return originalText[index];
+                if(letter === " " || letter === "\n") return letter; // preserve spaces and line breaks
+                return letters[Math.floor(Math.random() * letters.length)];
+              }).join("");
+              
+              if(iterations >= originalText.length){
+                clearInterval(heading.glitchInterval);
+                heading.innerText = originalText;
+                heading.classList.remove('glitch-active');
+              }
+              iterations += 1 / 3; // speed of unscrambling
+            }, 30);
+            
+            observer.unobserve(heading);
+          }
+        });
+      }, { threshold: 0.8 }); // Trigger when 80% visible
+      
+      document.querySelectorAll('.section-title:not([data-no-scramble]), .hero-heading-craft').forEach(heading => {
+        heading.setAttribute('data-text', heading.innerText);
+        // Pre-scramble text so it's fully scrambled before scrolling into view
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+        heading.innerText = heading.innerText.split("").map(char => 
+          (char === " " || char === "\n") ? char : letters[Math.floor(Math.random() * letters.length)]
+        ).join(""); 
+        scrambleObserver.observe(heading);
+      });
+      
+      // ── Typewriter effect for terminal commands
+      let terminalTimeouts = [];
+      const typeTerminal = () => {
+         const termHistory = document.getElementById('term-history');
+         const termLines = termHistory ? termHistory.querySelectorAll('.t-line') : [];
+         const termInput = document.getElementById('term-input');
+         const activePrompt = document.querySelector('.active-prompt');
+         
+         if(termLines.length > 0) {
+            if (activePrompt) activePrompt.style.opacity = '0';
+            
+            terminalTimeouts.forEach(clearTimeout);
+            terminalTimeouts = [];
+            
+            termLines.forEach(line => {
+              line.style.opacity = '0';
+              line.style.animation = 'none';
+            });
+            
+            void termLines[0].offsetWidth;
+
+            let delay = 0;
+            termLines.forEach((line, index) => {
+               const tid = setTimeout(() => {
+                  line.style.opacity = '1';
+                  line.style.animation = 'line-appear 0.2s forwards';
+                  
+                  // When last line is typed, show the input prompt
+                  if (index === termLines.length - 1) {
+                    setTimeout(() => {
+                      if (activePrompt) activePrompt.style.opacity = '1';
+                      if (termInput) termInput.focus();
+                    }, 500);
+                  }
+               }, delay);
+               terminalTimeouts.push(tid);
+               delay += 600;
+            });
+         }
+      };
+
+      // ── Interactive Terminal Input Handling
+      const termInput = document.getElementById('term-input');
+      const termHistory = document.getElementById('term-history');
+      const termBody = document.getElementById('term-body');
+
+      const addLine = (text, isCommand = false, isError = false) => {
+        const line = document.createElement('div');
+        line.className = isCommand ? 't-line' : 't-line command-output';
+        if (isError) line.style.color = '#ff2a00';
+        
+        if (isCommand) {
+          line.innerHTML = `<span class="t-prompt">root@codecraft:~#</span> ${text}`;
+        } else {
+          line.innerText = text;
+        }
+        
+        termHistory.appendChild(line);
+        if (termBody) termBody.scrollTop = termBody.scrollHeight;
+      };
+
+      const commands = {
+        help: () => {
+          const helpData = [
+            { cmd: 'help', desc: 'Display all available system protocols.' },
+            { cmd: 'about', desc: 'Learn about the CODECRAFT mission and vision.' },
+            { cmd: 'status', desc: 'Check real-time hardware vitals and sync state.' },
+            { cmd: 'register', desc: 'Initiate secure uplink to the participant portal.' },
+            { cmd: 'overclock', desc: 'Toggle performance bypass (WARNING: Thermal Risk).' },
+            { cmd: 'ls', desc: 'List active system configuration files.' },
+            { cmd: 'whoami', desc: 'Display current user credentials and access level.' },
+            { cmd: 'hack', desc: 'Attempt unauthorized firewall penetration.' },
+            { cmd: 'clear', desc: 'Purge terminal history and reset buffer.' }
+          ];
+
+          addLine("ACCESSING CORE COMMAND DIRECTORY...", false);
+          helpData.forEach((item, i) => {
+            setTimeout(() => {
+              addLine(`${item.cmd.padEnd(12)} - ${item.desc}`, false);
+            }, (i + 1) * 150);
+          });
+          return null;
+        },
+        clear: () => {
+          termHistory.innerHTML = '';
+          return null;
+        },
+        ls: () => "init_hardware.sh  execute_hackathon.exe  secrets.txt  neural_link.bin",
+        whoami: () => "GUEST_USER // UNAUTHORIZED // ACCESS_LEVEL: 0",
+        about: () => "CODECRAFT 2026: Where Software Meets Hardware. Bridge the gap between virtual logic and physical circuits.",
+        status: () => isOverclocked ? "SYSTEM_STATE: OVERCLOCKED // CRITICAL_HEAT // BYPASS_ACTIVE" : "SYSTEM_STATE: OPTIMAL // SYNC_STABLE",
+        register: () => {
+          addLine("INITIATING SECURE UPLINK TO REGISTRATION_SERVER...", false);
+          setTimeout(() => addLine("Handshake established... [ENCRYPTED]", false), 400);
+          setTimeout(() => addLine("Redirecting to participant dashboard...", false), 800);
+          setTimeout(() => {
+            window.open('https://participant-dashboard.vercel.app', '_blank');
+          }, 1200);
+          return "UPLINK_SUCCESSFUL. OPENING PORTAL...";
+        },
+        hack: () => {
+          addLine("INITIATING BRUTE-FORCE PROTOCOL...", false);
+          setTimeout(() => addLine("Searching for vulnerability... [FOUND]", false), 500);
+          setTimeout(() => addLine("Injecting SQLi payloads into core db...", false), 1200);
+          setTimeout(() => addLine("Decrypting admin_shadow... [####------] 42%", false), 1800);
+          setTimeout(() => {
+            addLine("CRITICAL ERROR: INTRUSION DETECTED", false, true);
+            addLine("UPLINK TRACED TO LOCAL NODE", false, true);
+            addLine("ALERT: AUTHORITIES NOTIFIED", false, true);
+            addLine("INITIATING SYSTEM LOCKDOWN...", false, true);
+            const term = document.getElementById('interactive-terminal');
+            if (term) {
+              term.classList.add('term-shake');
+              setTimeout(() => term.classList.remove('term-shake'), 400);
+            }
+          }, 2800);
+          return "PROTOCOL_0: ACCESS_REJECTED_BY_FIREWALL";
+        },
+        overclock: () => {
+          const mcu = document.getElementById('interactive-mcu');
+          const shell = document.getElementById('page-shell');
+          if (mcu) mcu.click();
+          
+          if (!isOverclocked) {
+             // We are about to be overclocked because click() toggles it
+             addLine("BYPASSING HARDWARE SAFETY LIMITS...", false, true);
+             setTimeout(() => addLine("Voltages increased: 1.2V -> 1.85V [CRITICAL]", false, true), 400);
+             setTimeout(() => addLine("Fan RPM: 100% [INSUFFICIENT_COOLING]", false, true), 800);
+             setTimeout(() => addLine("WARNING: CORE_TEMP @ 108°C", false, true), 1200);
+             shell?.classList.add('critical-state');
+             return "SYSTEM OVERCLOCKED. PERFORMANCE PEAKED. STABILITY: 12%";
+          } else {
+             shell?.classList.remove('critical-state');
+             return "Overclock sequence TERMINATED. Cooling initiated.";
+          }
+        }
+      };
+
+      if (termInput) {
+        termInput.addEventListener('input', () => {
+          // Dynamic width adjustment
+          termInput.style.width = (termInput.value.length + 1) + "ch";
+        });
+
+        termInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const input = termInput.value.trim().toLowerCase();
+            if (input) {
+              addLine(termInput.value, true);
+              
+              if (commands[input]) {
+                const output = commands[input]();
+                if (output) addLine(output);
+              } else {
+                addLine(`Command not found: ${input}. Type 'help' for available commands.`, false, true);
+              }
+            }
+            termInput.value = '';
+            termInput.style.width = '2px';
+          }
+        });
+
+        // Focus input whenever terminal is clicked
+        const termContainer = document.getElementById('interactive-terminal');
+        if (termContainer) {
+          termContainer.addEventListener('click', () => termInput.focus());
+        }
+
+        // ── Resize Logic ──
+        if (termContainer) {
+          const resizers = termContainer.querySelectorAll('.resizer-h');
+          let isResizing = false;
+
+          resizers.forEach(resizer => {
+            resizer.addEventListener('mousedown', (e) => {
+              isResizing = true;
+              const direction = resizer.getAttribute('data-direction');
+              const startX = e.clientX;
+              const startY = e.clientY;
+              const startWidth = termContainer.offsetWidth;
+              const startHeight = termContainer.offsetHeight;
+              const startLeft = termContainer.offsetLeft;
+              const startTop = termContainer.offsetTop;
+
+              const onMouseMove = (moveEvent) => {
+                if (!isResizing) return;
+
+                if (direction === 'r') {
+                  termContainer.style.width = startWidth + (moveEvent.clientX - startX) + 'px';
+                } else if (direction === 'b') {
+                  termContainer.style.height = startHeight + (moveEvent.clientY - startY) + 'px';
+                } else if (direction === 'l') {
+                  const newWidth = startWidth - (moveEvent.clientX - startX);
+                  if (newWidth > 280) {
+                    termContainer.style.width = newWidth + 'px';
+                    termContainer.style.left = startLeft + (moveEvent.clientX - startX) + 'px';
+                  }
+                } else if (direction === 't') {
+                  const newHeight = startHeight - (moveEvent.clientY - startY);
+                  if (newHeight > 200) {
+                    termContainer.style.height = newHeight + 'px';
+                    termContainer.style.top = startTop + (moveEvent.clientY - startY) + 'px';
+                  }
+                }
+              };
+
+              const onMouseUp = () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+              };
+
+              document.addEventListener('mousemove', onMouseMove);
+              document.addEventListener('mouseup', onMouseUp);
+              e.preventDefault();
+            });
+          });
+        }
+      }      
+      const termObserver = new IntersectionObserver((entries) => {
+         if(entries[0].isIntersecting) {
+            typeTerminal();
+            termObserver.disconnect();
+         }
+      });
+      const terminalElement = document.querySelector('.glass-terminal');
+      if(terminalElement) termObserver.observe(terminalElement);
+
+      // Terminal Interactive Reboot
+      const termRebootBtn = document.getElementById('term-reboot-btn');
+      if(termRebootBtn) {
+        termRebootBtn.addEventListener('click', () => {
+          typeTerminal(); // Re-run typing animation
+        });
+      }
+
+      // Interactive MCU Overclocking & Live HUD
+      let isOverclocked = false;
+      const mcuBoard = document.getElementById('interactive-mcu');
+      const latNode = document.querySelector('.hud-bl .hud-val');
+      const stateNode = document.querySelector('.hud-tr .hud-val');
+      let hudInterval;
+
+      const updateHud = () => {
+        if (!latNode) return;
+        
+        if (isOverclocked) {
+          // Overclocked HUD logic
+          latNode.innerText = `${Math.floor(Math.random() * 4 + 1)}ms`; // 1-4ms latency
+          latNode.style.color = "#ff2a00";
+          latNode.style.textShadow = "0 0 10px #ff2a00";
+          
+          if (stateNode) {
+            stateNode.innerText = "OVERCLOCKED";
+            stateNode.style.color = "#ff2a00";
+            stateNode.style.textShadow = "0 0 15px #ff2a00";
+          }
+        } else {
+          // Normal HUD logic
+          latNode.innerText = `${Math.floor(Math.random() * 20 + 8)}ms`;
+          latNode.style.color = "#00f2fe";
+          latNode.style.textShadow = "0 0 10px #00f2fe";
+          
+          if(stateNode && Math.random() > 0.8) {
+            stateNode.innerText = "SYNCING";
+            stateNode.style.color = "#ffbd2e";
+            stateNode.style.textShadow = "0 0 10px #ffbd2e";
+            setTimeout(() => {
+              if(!isOverclocked) { // Prevent overriding overclock state
+                stateNode.innerText = "OPTIMAL";
+                stateNode.style.color = "#00f2fe";
+                stateNode.style.textShadow = "0 0 10px #00f2fe";
+              }
+            }, 800);
+          }
+        }
+      };
+
+      // Initial HUD setup
+      hudInterval = setInterval(updateHud, 2000);
+
+      if (mcuBoard) {
+        mcuBoard.addEventListener('click', () => {
+          isOverclocked = !isOverclocked;
+          
+          if (isOverclocked) {
+            mcuBoard.classList.add('overclocked');
+            clearInterval(hudInterval);
+            hudInterval = setInterval(updateHud, 150); // Hyper-fast HUD updates
+            updateHud();
+          } else {
+            mcuBoard.classList.remove('overclocked');
+            clearInterval(hudInterval);
+            hudInterval = setInterval(updateHud, 2000); // Back to normal speed
+            
+            // Reset state node manually
+            if (stateNode) {
+              stateNode.innerText = "OPTIMAL";
+              stateNode.style.color = "#00f2fe";
+              stateNode.style.textShadow = "0 0 10px #00f2fe";
+            }
+            updateHud();
+          }
+        });
+      }
+      
+      // ── Ambient background mouse follow
+      document.addEventListener('mousemove', (e) => {
+        const bgOrbs = document.querySelector('.ambient-bg');
+        if (bgOrbs) {
+          const x = e.clientX / window.innerWidth;
+          const y = e.clientY / window.innerHeight;
+          bgOrbs.style.transform = `translate(${x * -20}px, ${y * -20}px)`;
+        }
+      });
+
     </script>
   </body>
 </html>

@@ -6,6 +6,9 @@ const { logoSrc } = Astro.props;
 ---
 
 <div class="loader-overlay" id="loader" aria-hidden="true">
+  <!-- Scanline Overlay -->
+  <div class="scanline"></div>
+
   <!-- Animated Background -->
   <div class="loader-bg">
     <div class="loader-grid"></div>
@@ -18,50 +21,26 @@ const { logoSrc } = Astro.props;
     <!-- Animated Logo -->
     <div class="logo-container">
       <div class="logo-frame">
-        <img src={logoSrc} alt="CodeCraft" class="loader-logo" />
+        <img src={logoSrc} alt="CodeCraft" class="loader-logo glitch-logo" />
         <div class="logo-pulse"></div>
         <div class="logo-shine"></div>
       </div>
     </div>
 
-    <!-- Code Building Section -->
-    <div class="code-builder">
-      <div class="code-window">
-        <div class="code-header">
-          <div class="code-dot red"></div>
-          <div class="code-dot yellow"></div>
-          <div class="code-dot green"></div>
-          <span class="code-filename">hackathon.build.js</span>
+    <!-- Terminal Section -->
+    <div class="terminal-builder">
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+          <span class="terminal-title">SYS_BOOT_SEQ_V9</span>
+          <span class="terminal-status" id="sys-status">OFFLINE</span>
         </div>
-        <div class="code-content" id="code-display">
-          <div class="code-line">
-            <span class="code-keyword">const</span>
-            <span class="code-var">project</span>
-            <span class="code-op">=</span>
-            <span class="code-string">"CodeCraft"</span>
-            <span class="code-op">;</span>
-          </div>
-          <div class="code-line">
-            <span class="code-keyword">let</span>
-            <span class="code-var">teams</span>
-            <span class="code-op">=</span>
-            <span class="code-number" id="teams-count">0</span>
-            <span class="code-op">;</span>
-          </div>
-          <div class="code-line">
-            <span class="code-keyword">let</span>
-            <span class="code-var">innovations</span>
-            <span class="code-op">=</span>
-            <span class="code-number" id="ideas-count">0</span>
-            <span class="code-op">;</span>
-          </div>
-          <div class="code-line">
-            <span class="code-keyword">const</span>
-            <span class="code-var">status</span>
-            <span class="code-op">=</span>
-            <span class="code-string" id="status-text">"initializing"</span>
-            <span class="code-op">;</span>
-          </div>
+        <div class="terminal-content" id="terminal-content">
+          <!-- JS injects lines here -->
         </div>
       </div>
     </div>
@@ -71,10 +50,11 @@ const { logoSrc } = Astro.props;
       <div class="progress-container">
         <div class="progress-bar">
           <div class="progress-fill" id="loader-progress"></div>
+          <div class="progress-glow"></div>
         </div>
         <div class="progress-meta">
-          <span id="loader-percent">0%</span>
-          <span class="pulse-text">Building hackathon experience...</span>
+          <span id="loader-percent" class="glitch-text" data-text="0%">0%</span>
+          <span class="pulse-text" id="loading-msg">PREPARING FOR IMMERSION...</span>
         </div>
       </div>
     </div>
@@ -86,21 +66,32 @@ const { logoSrc } = Astro.props;
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: linear-gradient(135deg, #02040a 0%, #050812 50%, #0a0e1a 100%);
+    background: #02040a;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: var(--c-cyan, #00f2fe);
-    font-family: var(--font-body);
+    font-family: var(--font-body), sans-serif;
     overflow: hidden;
-    transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.8s ease;
+    transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1), opacity 1s ease;
   }
 
   .loader-overlay.is-hidden {
     transform: translateY(-100%);
     pointer-events: none;
     opacity: 0;
+  }
+
+  /* Scanline Overlay */
+  .scanline {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2));
+    background-size: 100% 4px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.6;
   }
 
   /* Background Animation */
@@ -113,11 +104,18 @@ const { logoSrc } = Astro.props;
 
   .loader-grid {
     position: absolute;
-    inset: 0;
+    inset: -50%;
     background-image:
-      linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
+      linear-gradient(rgba(0, 242, 254, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 242, 254, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(500px) rotateX(60deg) translateY(-100px);
+    animation: grid-move 4s linear infinite;
+  }
+
+  @keyframes grid-move {
+    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+    100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
   }
 
   .glow-orb {
@@ -131,7 +129,7 @@ const { logoSrc } = Astro.props;
   .glow-1 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.4), transparent);
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.5), transparent);
     top: -100px;
     left: -100px;
     animation-delay: 0s;
@@ -140,7 +138,7 @@ const { logoSrc } = Astro.props;
   .glow-2 {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(79, 172, 254, 0.3), transparent);
+    background: radial-gradient(circle, rgba(79, 172, 254, 0.4), transparent);
     bottom: -150px;
     right: -150px;
     animation-delay: 2s;
@@ -149,7 +147,7 @@ const { logoSrc } = Astro.props;
   .glow-3 {
     width: 350px;
     height: 350px;
-    background: radial-gradient(circle, rgba(142, 45, 226, 0.2), transparent);
+    background: radial-gradient(circle, rgba(142, 45, 226, 0.3), transparent);
     top: 50%;
     right: 10%;
     animation-delay: 4s;
@@ -168,7 +166,7 @@ const { logoSrc } = Astro.props;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 3rem;
     max-width: 800px;
     width: 90%;
   }
@@ -177,60 +175,60 @@ const { logoSrc } = Astro.props;
   .logo-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
   }
 
   .logo-frame {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .loader-logo {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     object-fit: contain;
-    filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.6));
-    animation: logo-bounce 2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8));
+    animation: logo-float 3s ease-in-out infinite, glitch-anim 5s infinite;
     position: relative;
     z-index: 2;
   }
 
-  @keyframes logo-bounce {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-15px) scale(1.05); }
+  @keyframes logo-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes glitch-anim {
+    0% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
+    20% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
+    21% { filter: drop-shadow(3px 0 0 rgba(255,0,0,0.5)) drop-shadow(-3px 0 0 rgba(0,255,255,0.5)); transform: translate(-2px, 2px); }
+    22% { filter: drop-shadow(-3px 0 0 rgba(255,0,0,0.5)) drop-shadow(3px 0 0 rgba(0,255,255,0.5)); transform: translate(2px, -2px); }
+    23% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
+    100% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
   }
 
   .logo-pulse {
     position: absolute;
-    inset: -10px;
-    border: 2px solid rgba(0, 242, 254, 0.3);
+    inset: -15px;
+    border: 2px solid rgba(0, 242, 254, 0.4);
     border-radius: 50%;
-    animation: pulse-ring 2s ease-out infinite;
+    animation: pulse-ring 2.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
   }
 
   .logo-shine {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, transparent, rgba(0, 242, 254, 0.3), transparent);
-    animation: spin-shine 3s linear infinite;
+    background: conic-gradient(from 0deg, transparent, rgba(0, 242, 254, 0.4), transparent);
+    animation: spin-shine 2s linear infinite;
   }
 
   @keyframes pulse-ring {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-      border-color: rgba(0, 242, 254, 0.6);
-    }
-    100% {
-      transform: scale(1.5);
-      opacity: 0;
-      border-color: transparent;
-    }
+    0% { transform: scale(0.8); opacity: 1; border-color: rgba(0, 242, 254, 0.8); }
+    100% { transform: scale(1.6); opacity: 0; border-color: transparent; }
   }
 
   @keyframes spin-shine {
@@ -238,28 +236,39 @@ const { logoSrc } = Astro.props;
     100% { transform: rotate(360deg); }
   }
 
-  /* Code Builder Section */
-  .code-builder {
+  /* Terminal Section */
+  .terminal-builder {
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
+    perspective: 1000px;
   }
 
-  .code-window {
-    background: rgba(8, 14, 28, 0.8);
-    border: 1px solid rgba(0, 242, 254, 0.25);
-    border-radius: 8px;
+  .terminal-window {
+    background: rgba(4, 8, 16, 0.85);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
+    transform: rotateX(5deg);
+    transition: transform 0.3s ease;
   }
 
-  .code-header {
-    background: rgba(0, 242, 254, 0.08);
-    padding: 0.75rem 1rem;
+  .terminal-window:hover {
+    transform: rotateX(0deg);
+  }
+
+  .terminal-header {
+    background: rgba(0, 242, 254, 0.1);
+    padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+    border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
   }
 
   .code-dot {
@@ -268,127 +277,88 @@ const { logoSrc } = Astro.props;
     border-radius: 50%;
   }
 
-  .code-dot.red { background: #ff6b6b; }
-  .code-dot.yellow { background: #ffd93d; }
-  .code-dot.green { background: #6bcf7f; }
+  .code-dot.red { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
+  .code-dot.yellow { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
+  .code-dot.green { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
 
-  .code-filename {
+  .terminal-title {
+    margin-left: 1rem;
+    font-size: 0.7rem;
+    color: rgba(0, 242, 254, 0.8);
+    font-family: var(--font-mono), monospace;
+    letter-spacing: 0.15em;
+    font-weight: bold;
+  }
+
+  .terminal-status {
     margin-left: auto;
     font-size: 0.65rem;
-    color: rgba(0, 242, 254, 0.7);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-  }
-
-  .code-content {
-    padding: 1.25rem;
-    font-family: var(--font-code);
-    font-size: 0.8rem;
-    color: rgba(226, 232, 240, 0.8);
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .code-line {
-    opacity: 0;
-    animation: code-type 0.4s ease-out forwards;
-  }
-
-  .code-line:nth-child(1) { animation-delay: 0.1s; }
-  .code-line:nth-child(2) { animation-delay: 0.5s; }
-  .code-line:nth-child(3) { animation-delay: 0.9s; }
-  .code-line:nth-child(4) { animation-delay: 1.3s; }
-
-  @keyframes code-type {
-    0% {
-      opacity: 0;
-      transform: translateX(-10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .code-keyword { color: #ff6b9d; font-weight: 600; }
-  .code-var { color: #00f2fe; }
-  .code-op { color: #4facfe; }
-  .code-string { color: #6bcf7f; }
-  .code-number {
-    color: #ffd93d;
-    animation: number-count 2s ease-out forwards;
-  }
-
-  @keyframes number-count {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Stats Container */
-  .stats-container {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    width: 100%;
-    justify-content: center;
-    padding: 1.5rem;
-    background: rgba(0, 242, 254, 0.05);
-    border: 1px solid rgba(0, 242, 254, 0.15);
-    border-radius: 8px;
-    backdrop-filter: blur(8px);
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .stat-label {
-    font-size: 0.6rem;
-    color: rgba(0, 242, 254, 0.6);
+    color: #ff5f56;
+    font-family: var(--font-mono), monospace;
     letter-spacing: 0.1em;
-    font-weight: 600;
-    text-transform: uppercase;
+    animation: blink 1s infinite;
   }
 
-  .stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
+  .terminal-status.online {
+    color: #27c93f;
+    animation: none;
+    text-shadow: 0 0 8px #27c93f;
+  }
+
+  .terminal-content {
+    padding: 1.5rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.85rem;
     color: #00f2fe;
-    font-family: var(--font-mono);
-    min-width: 2.5rem;
-    text-align: center;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    overflow: hidden;
+    position: relative;
+    text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
   }
 
-  .stat-value.status-pulse {
-    animation: status-glow 1.5s ease-in-out infinite;
+  .terminal-content::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 30px;
+    background: linear-gradient(transparent, rgba(4, 8, 16, 0.9));
   }
 
-  @keyframes status-glow {
-    0%, 100% {
-      color: #00f2fe;
-      text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
-    }
-    50% {
-      color: #4facfe;
-      text-shadow: 0 0 20px rgba(79, 172, 254, 0.6);
-    }
+  .term-line {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: line-appear 0.2s forwards;
   }
 
-  .stat-divider {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(180deg, transparent, rgba(0, 242, 254, 0.3), transparent);
+  .term-prefix {
+    color: #4facfe;
+    margin-right: 8px;
+  }
+
+  .term-success { color: #27c93f; }
+  .term-warn { color: #ffbd2e; }
+  .term-err { color: #ff5f56; }
+
+  .term-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: #00f2fe;
+    margin-left: 5px;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes line-appear {
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* Footer & Progress */
   .loader-footer {
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
     margin-top: auto;
   }
 
@@ -400,85 +370,87 @@ const { logoSrc } = Astro.props;
 
   .progress-bar {
     width: 100%;
-    height: 6px;
-    background: rgba(0, 242, 254, 0.1);
-    border-radius: 10px;
+    height: 4px;
+    background: rgba(0, 242, 254, 0.05);
     overflow: hidden;
+    position: relative;
     border: 1px solid rgba(0, 242, 254, 0.2);
   }
 
   .progress-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #00f2fe, #4facfe, #8e2de2);
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 10px;
+    background: #00f2fe;
+    box-shadow: 0 0 15px #00f2fe, 0 0 30px #4facfe;
+    transition: width 0.1s linear;
+    position: relative;
+  }
+
+  .progress-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    filter: blur(5px);
+    animation: progress-scan 1s infinite linear;
+    mix-blend-mode: overlay;
+  }
+
+  @keyframes progress-scan {
+    0% { transform: translateX(-100px); }
+    100% { transform: translateX(800px); }
   }
 
   .progress-meta {
     display: flex;
     justify-content: space-between;
-    font-size: 0.65rem;
-    color: rgba(0, 242, 254, 0.6);
-    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    color: rgba(0, 242, 254, 0.8);
+    font-family: var(--font-mono), monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .pulse-text {
-    animation: blink 1.5s ease-in-out infinite;
+    animation: text-flicker 3s linear infinite;
+  }
+
+  @keyframes text-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.5; }
+    22% { opacity: 0.3; }
   }
 
   @keyframes blink {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
   }
 
   /* Responsive */
   @media (max-width: 640px) {
     .loader-content {
-      width: 95%;
-      gap: 1.5rem;
+      gap: 2rem;
     }
-
-    .code-content {
-      font-size: 0.65rem;
-      padding: 1rem;
-      min-height: 100px;
+    .terminal-content {
+      font-size: 0.7rem;
+      height: 150px;
     }
-
-    .stats-container {
-      gap: 1rem;
-      padding: 1rem;
-    }
-
-    .stat-value {
-      font-size: 1.2rem;
-    }
-
-    .logo-frame {
-      width: 90px;
-      height: 90px;
-    }
-
-    .loader-logo {
-      width: 75px;
-      height: 75px;
+    .progress-meta {
+      font-size: 0.6rem;
     }
   }
 </style>
 
 <script>
-
-
   const loader = document.getElementById('loader');
   const progress = document.getElementById('loader-progress');
   const percent = document.getElementById('loader-percent');
-  const teamsCount = document.getElementById('teams-count');
-  const ideasCount = document.getElementById('ideas-count');
-  const statusText = document.getElementById('status-text');
-  const statTeams = document.getElementById('stat-teams');
-  const statIdeas = document.getElementById('stat-ideas');
-  // const statStatus = document.getElementById('stat-status');
+  const msg = document.getElementById('loading-msg');
+  const termContent = document.getElementById('terminal-content');
+  const sysStatus = document.getElementById('sys-status');
+  
   const originalBodyOverflow = document.body.style.overflow;
   const originalRootOverflow = document.documentElement.style.overflow;
   const originalScrollBehavior = document.documentElement.style.scrollBehavior;
@@ -499,88 +471,94 @@ const { logoSrc } = Astro.props;
     history.replaceState(null, document.title, window.location.pathname + window.location.search);
   }
 
-  clearInitialHashScroll();
-  forceTopScroll();
-
-  // Animate number counting
-  function animateNumber(element: HTMLElement | null, target: number, duration: number) {
-    if (!element) return;
-    let current = 0;
-    const increment = target / (duration / 16);
-    const interval = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        element.textContent = String(target);
-        clearInterval(interval);
-      } else {
-        element.textContent = String(Math.floor(current));
-      }
-    }, 16);
-  }
-
-  // Hackathon stats
-  const stats = {
-    teams: 48,
-    ideas: 120,
-    phases: ['initializing', 'building', 'testing', 'deploying', 'live!']
-  };
-
-  let currentPhase = 0;
-
-  // Update status text periodically
-  const statusInterval = setInterval(() => {
-    if (currentPhase < stats.phases.length) {
-      const newStatus = stats.phases[currentPhase];
-      if (statusText) {
-        statusText.style.opacity = '0';
-        setTimeout(() => {
-          if (statusText) {
-            statusText.textContent = `"${newStatus}"`;
-            statusText.style.transition = 'opacity 0.3s ease';
-            statusText.style.opacity = '1';
-          }
-        }, 300);
-      }
-      currentPhase++;
-    }
-  }, 1500);
-
-
+  const bootLogs = [
+    { text: "Initiating neural handshake...", delay: 200 },
+    { text: "Bypassing mainstream protocols [OK]", delay: 400, type: "term-success" },
+    { text: "Decrypting hackathon matrix...", delay: 700 },
+    { text: "Warning: High energy output detected", delay: 1000, type: "term-warn" },
+    { text: "Synthesizing innovation nodes...", delay: 1300 },
+    { text: "Compiling reality distortion field [DONE]", delay: 1700, type: "term-success" },
+    { text: "Loading CodeCraft core engine...", delay: 2000 },
+    { text: "Override limits active.", delay: 2300, type: "term-warn" },
+    { text: "System fully operational.", delay: 2600, type: "term-success" },
+    { text: "Welcome to the next level.", delay: 2900 }
+  ];
 
   async function startLoader() {
-    // Lock scroll at the top while the loader is visible.
     forceTopScroll();
     clearInitialHashScroll();
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
-    // Animate counters
-    animateNumber(teamsCount, stats.teams, 1500);
-    animateNumber(ideasCount, stats.ideas, 1500);
-    animateNumber(statTeams, stats.teams, 1500);
-    animateNumber(statIdeas, stats.ideas, 1500);
+    // Terminal Boot Sequence
+    let timeOffset = 0;
+    let activeCursor: HTMLSpanElement | null = null;
+    
+    bootLogs.forEach((log, index) => {
+      setTimeout(() => {
+        if (activeCursor) {
+          activeCursor.remove();
+        }
+        
+        if (termContent) {
+          const line = document.createElement('div');
+          line.className = 'term-line';
+          
+          let colorClass = log.type ? log.type : '';
+          
+          line.innerHTML = `<span class="term-prefix">~</span><span class="${colorClass}">${log.text}</span>`;
+          
+          // Add cursor to the last line
+          if (index < bootLogs.length - 1) {
+             const cursor = document.createElement('span');
+             cursor.className = 'term-cursor';
+             line.appendChild(cursor);
+             activeCursor = cursor;
+          }
+          
+          termContent.appendChild(line);
+          termContent.scrollTop = termContent.scrollHeight;
+          
+          // Status updates
+          if (index === 2 && sysStatus) {
+            sysStatus.textContent = 'BOOTING...';
+            sysStatus.style.color = '#ffbd2e';
+          }
+          if (index === 8 && sysStatus) {
+            sysStatus.textContent = 'ONLINE';
+            sysStatus.className = 'terminal-status online';
+          }
+        }
+      }, log.delay);
+    });
 
-    // Progress animation
+    // Progress animation mapping to the 3.5s boot sequence
     let progress_value = 0;
     const progressInterval = setInterval(() => {
-      progress_value += Math.random() * 25;
+      // Exponential-like progress
+      progress_value += (100 - progress_value) * 0.08 + Math.random() * 2;
+      
       if (progress_value >= 100) {
         progress_value = 100;
         clearInterval(progressInterval);
+        if (msg) msg.textContent = "SYSTEM READY. ENTERING...";
       }
+      
       if (progress) progress.style.width = `${progress_value}%`;
-      if (percent) percent.textContent = `${Math.floor(progress_value)}%`;
-    }, 400);
+      if (percent) {
+        percent.textContent = `${Math.floor(progress_value)}%`;
+        percent.setAttribute('data-text', `${Math.floor(progress_value)}%`);
+      }
+    }, 50);
 
-    // Final animation
+    // Final unlock
     setTimeout(() => {
       forceTopScroll();
       if (loader) loader.classList.add('is-hidden');
       document.body.style.overflow = originalBodyOverflow;
       document.documentElement.style.overflow = originalRootOverflow;
       document.documentElement.style.scrollBehavior = originalScrollBehavior;
-      clearInterval(statusInterval);
-    }, 3500);
+    }, 4000);
   }
 
   // Start when page is ready

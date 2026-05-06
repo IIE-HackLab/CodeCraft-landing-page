@@ -3,23 +3,41 @@ import logoImg from "../assets/images/logo-high.png";
 ---
 
 <header class="nav-root" id="site-nav-container">
-  <nav class="nav-inner" id="site-nav" role="navigation" aria-label="Main navigation">
-
+  <nav
+    class="nav-inner"
+    id="site-nav"
+    role="navigation"
+    aria-label="Main navigation"
+  >
     <!-- Logo -->
-    <a href="#home" class="nav-brand" aria-label="CodeCraft – back to top" id="nav-brand-link">
-      <img src={logoImg.src} width={logoImg.width} height={logoImg.height} alt="CodeCraft logo" class="nav-logo-img" decoding="async" />
+    <a
+      href="#home"
+      class="nav-brand"
+      aria-label="CodeCraft – back to top"
+      id="nav-brand-link"
+    >
+      <img
+        src={logoImg.src}
+        width={logoImg.width}
+        height={logoImg.height}
+        alt="CodeCraft logo"
+        class="nav-logo-img"
+        decoding="async"
+      />
       <div class="nav-brand-text">
-        <span class="nav-brand-name">CODE<span class="nav-brand-accent">CRAFT</span></span>
+        <span class="nav-brand-name"
+          >CODE<span class="nav-brand-accent">CRAFT</span></span
+        >
         <span class="nav-brand-sub">IIE Tech Club</span>
       </div>
     </a>
 
     <!-- Desktop nav links -->
     <nav class="nav-links" aria-label="Sections" id="nav-links-desktop">
-      <a href="#about"      class="nav-link" id="nl-about">About</a>
-      <a href="#prizes"     class="nav-link" id="nl-prizes">Prizes</a>
-      <a href="#timeline"   class="nav-link" id="nl-timeline">Timeline</a>
-      <a href="#rules"      class="nav-link" id="nl-rules">Rules</a>
+      <a href="#about" class="nav-link" id="nl-about">About</a>
+      <a href="#prizes" class="nav-link" id="nl-prizes">Prizes</a>
+      <a href="#timeline" class="nav-link" id="nl-timeline">Timeline</a>
+      <a href="#rules" class="nav-link" id="nl-rules">Rules</a>
       <a href="#submission" class="nav-link" id="nl-submit">Submit</a>
       <a href="#organizers" class="nav-link" id="nl-team">Team</a>
     </nav>
@@ -27,79 +45,275 @@ import logoImg from "../assets/images/logo-high.png";
     <!-- Right side -->
     <div class="nav-right">
       <!-- Active section badge -->
-      <span class="nav-section-badge" id="nav-section-badge" aria-live="polite" aria-atomic="true">
+      <span
+        class="nav-section-badge"
+        id="nav-section-badge"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <span class="nav-section-dot" aria-hidden="true"></span>
         <span id="nav-section-label">Home</span>
       </span>
 
       <!-- Register CTA -->
-      <button class="nav-cta" type="button" data-auth-trigger id="nav-register-btn" onclick="window.open('https://participant-dashboard.vercel.app/', '_blank')">
+      <button
+        class="nav-cta"
+        type="button"
+        data-auth-trigger
+        id="nav-register-btn"
+        onclick="window.open('https://participant-dashboard.vercel.app/', '_blank')"
+      >
         <span>Register</span>
-        <svg viewBox="0 0 16 16" fill="none" class="nav-cta-icon" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          class="nav-cta-icon"
+          aria-hidden="true"
+        >
+          <path
+            d="M3 8h10M9 4l4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
       </button>
 
       <!-- Hamburger (mobile) -->
-      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false" type="button">
-        <span class="ham-line" id="hl-1"></span>
-        <span class="ham-line" id="hl-2"></span>
-        <span class="ham-line" id="hl-3"></span>
+      <button
+        class="nav-hamburger"
+        id="hamburger"
+        aria-label="Toggle menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        type="button"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="icon icon-tabler icons-tabler-filled icon-tabler-list"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M21 6a1 1 0 0 1 -1 1h-10a1 1 0 1 1 0 -2h10a1 1 0 0 1 1 1"
+          ></path>
+          <path d="M21 12a1 1 0 0 1 -1 1h-10a1 1 0 0 1 0 -2h10a1 1 0 0 1 1 1"
+          ></path>
+          <path d="M21 18a1 1 0 0 1 -1 1h-10a1 1 0 0 1 0 -2h10a1 1 0 0 1 1 1"
+          ></path>
+          <path
+            d="M7 5.995v.02c0 1.099 -.895 1.99 -2 1.99s-2 -.891 -2 -1.99v-.02c0 -1.099 .895 -1.99 2 -1.99s2 .891 2 1.99"
+          ></path>
+          <path
+            d="M7 11.995v.02c0 1.099 -.895 1.99 -2 1.99s-2 -.891 -2 -1.99v-.02c0 -1.099 .895 -1.99 2 -1.99s2 .891 2 1.99"
+          ></path>
+          <path
+            d="M7 17.995v.02c0 1.099 -.895 1.99 -2 1.99s-2 -.891 -2 -1.99v-.02c0 -1.099 .895 -1.99 2 -1.99s2 .891 2 1.99"
+          ></path>
+        </svg>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile dropdown menu -->
+  <!-- Mobile full-screen overlay -->
   <div class="nav-mobile-menu" id="mobile-menu" aria-hidden="true">
+    <!-- Scanline FX -->
+    <div class="mob-scanline" aria-hidden="true"></div>
+    <!-- Corner brackets -->
+    <span class="mob-corner mob-corner--tl" aria-hidden="true"></span>
+    <span class="mob-corner mob-corner--tr" aria-hidden="true"></span>
+    <span class="mob-corner mob-corner--bl" aria-hidden="true"></span>
+    <span class="mob-corner mob-corner--br" aria-hidden="true"></span>
+
     <nav class="nav-mobile-links" aria-label="Mobile navigation">
-      <div class="nav-mobile-header">
-        <h2 class="nav-mobile-title">CodeCraft</h2>
-        <button class="nav-mobile-close" id="mobile-close" aria-label="Close menu" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+      <!-- Header -->
+      <div class="mob-header">
+        <div class="mob-header-brand">
+          <img src={logoImg.src} alt="CodeCraft logo" class="mob-header-logo" />
+          <div>
+            <p class="mob-header-title">
+              CODE<span class="mob-accent">CRAFT</span>
+            </p>
+            <p class="mob-header-sub">// IIE_TECH_CLUB.init()</p>
+          </div>
+        </div>
+        <button
+          class="mob-close"
+          id="mob-close"
+          aria-label="Close menu"
+          type="button"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="icon icon-tabler icons-tabler-filled icon-tabler-xbox-x"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path
+              d="M12 2c5.523 0 10 4.477 10 10s-4.477 10 -10 10s-10 -4.477 -10 -10s4.477 -10 10 -10m3.6 5.2a1 1 0 0 0 -1.4 .2l-2.2 2.933l-2.2 -2.933a1 1 0 1 0 -1.6 1.2l2.55 3.4l-2.55 3.4a1 1 0 1 0 1.6 1.2l2.2 -2.933l2.2 2.933a1 1 0 0 0 1.6 -1.2l-2.55 -3.4l2.55 -3.4a1 1 0 0 0 -.2 -1.4"
+            ></path>
           </svg>
         </button>
       </div>
 
-      <div class="nav-mobile-sections">
-        <a href="#about"      class="nav-mobile-link" id="ml-about">
-          <span class="nav-mobile-num">01</span>
-          <span class="nav-mobile-text">About</span>
-        </a>
-        <a href="#prizes"     class="nav-mobile-link" id="ml-prizes">
-          <span class="nav-mobile-num">02</span>
-          <span class="nav-mobile-text">Prizes</span>
-        </a>
-        <a href="#timeline"   class="nav-mobile-link" id="ml-timeline">
-          <span class="nav-mobile-num">03</span>
-          <span class="nav-mobile-text">Timeline</span>
-        </a>
-        <a href="#rules"      class="nav-mobile-link" id="ml-rules">
-          <span class="nav-mobile-num">04</span>
-          <span class="nav-mobile-text">Rules</span>
-        </a>
-        <a href="#submission" class="nav-mobile-link" id="ml-submit">
-          <span class="nav-mobile-num">05</span>
-          <span class="nav-mobile-text">Submission</span>
-        </a>
-        <a href="#organizers" class="nav-mobile-link" id="ml-team">
-          <span class="nav-mobile-num">06</span>
-          <span class="nav-mobile-text">Team</span>
-        </a>
-        <a href="#contact"    class="nav-mobile-link" id="ml-contact">
-          <span class="nav-mobile-num">07</span>
-          <span class="nav-mobile-text">Contact</span>
-        </a>
+      <!-- Status bar -->
+      <div class="mob-status-bar">
+        <span class="mob-status-dot"></span>
+        <span class="mob-status-text">SYSTEM_ONLINE · NAVIGATE_TO_MODULE</span>
+      </div>
 
-        <div class="nav-mobile-register-spacing">
-          <button class="nav-mobile-cta" type="button" id="ml-register" onclick="window.open('https://participant-dashboard.vercel.app/', '_blank')"> 
-            <span>Register Now</span>
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
+      <!-- Nav items -->
+      <div class="mob-nav-list">
+        <a
+          href="#about"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-about"
+          style="--i:0"
+        >
+          <span class="mob-idx">01</span>
+          <span class="mob-label">About</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href="#prizes"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-prizes"
+          style="--i:1"
+        >
+          <span class="mob-idx">02</span>
+          <span class="mob-label">Prizes</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href="#timeline"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-timeline"
+          style="--i:2"
+        >
+          <span class="mob-idx">03</span>
+          <span class="mob-label">Timeline</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href="#rules"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-rules"
+          style="--i:3"
+        >
+          <span class="mob-idx">04</span>
+          <span class="mob-label">Rules</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href="#submission"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-submit"
+          style="--i:4"
+        >
+          <span class="mob-idx">05</span>
+          <span class="mob-label">Submission</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href="#organizers"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-team"
+          style="--i:5"
+        >
+          <span class="mob-idx">06</span>
+          <span class="mob-label">Team</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href="#contact"
+          class="mob-nav-item nav-mobile-link"
+          id="ml-contact"
+          style="--i:6"
+        >
+          <span class="mob-idx">07</span>
+          <span class="mob-label">Contact</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+      </div>
+
+      <!-- CTA -->
+      <div class="mob-cta-wrap">
+        <button
+          class="mob-cta"
+          type="button"
+          id="ml-register"
+          onclick="window.open('https://participant-dashboard.vercel.app/', '_blank')"
+        >
+          <span>Register Now</span>
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            width="16"
+            height="16"
+            aria-hidden="true"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </button>
+        <p class="mob-cta-sub">// ACCESS_LEVEL: PARTICIPANT</p>
       </div>
     </nav>
   </div>
@@ -115,7 +329,7 @@ import logoImg from "../assets/images/logo-high.png";
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: padding 0.5s cubic-bezier(0.16,1,0.3,1);
+    transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 0;
   }
 
@@ -128,7 +342,7 @@ import logoImg from "../assets/images/logo-high.png";
     justify-content: space-between;
     padding: 1.5rem 2rem;
     transition:
-      padding 0.5s cubic-bezier(0.16,1,0.3,1),
+      padding 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       background 0.5s ease,
       border-radius 0.5s ease,
       border-color 0.5s ease,
@@ -154,9 +368,9 @@ import logoImg from "../assets/images/logo-high.png";
     border-radius: 999px;
     border-color: rgba(0, 242, 254, 0.15);
     box-shadow:
-      0 0 0 1px rgba(0,242,254,0.06) inset,
-      0 20px 60px rgba(0,0,0,0.5),
-      0 0 30px rgba(0,242,254,0.06);
+      0 0 0 1px rgba(0, 242, 254, 0.06) inset,
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(0, 242, 254, 0.06);
   }
 
   /* ── Brand ── */
@@ -172,12 +386,12 @@ import logoImg from "../assets/images/logo-high.png";
     width: 36px;
     height: 36px;
     object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(0,242,254,0.45));
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.45));
     transition: filter 0.3s ease;
   }
 
   .nav-brand:hover .nav-logo-img {
-    filter: drop-shadow(0 0 16px rgba(0,242,254,0.7));
+    filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.7));
   }
 
   .nav-brand-text {
@@ -187,7 +401,7 @@ import logoImg from "../assets/images/logo-high.png";
   }
 
   .nav-brand-name {
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-weight: 900;
     font-size: 1.05rem;
     color: #f0f6ff;
@@ -199,7 +413,7 @@ import logoImg from "../assets/images/logo-high.png";
   }
 
   .nav-brand-sub {
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-size: 0.5rem;
     color: rgba(100, 116, 139, 0.8);
     letter-spacing: 0.18em;
@@ -215,7 +429,7 @@ import logoImg from "../assets/images/logo-high.png";
   }
 
   .nav-link {
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.18em;
@@ -224,7 +438,9 @@ import logoImg from "../assets/images/logo-high.png";
     text-decoration: none;
     padding: 0.5rem 0.9rem;
     border-radius: 6px;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
     position: relative;
   }
 
@@ -243,16 +459,7 @@ import logoImg from "../assets/images/logo-high.png";
 
   .nav-link:hover {
     color: #f0f6ff;
-    background: rgba(255,255,255,0.04);
-  }
-
-  .nav-link:hover::after,
-  .nav-link.is-active::after {
-    transform: translateX(-50%) scaleX(1);
-  }
-
-  .nav-link.is-active {
-    color: #00f2fe;
+    background: rgba(255, 255, 255, 0.04);
   }
 
   /* ── Right side ── */
@@ -268,13 +475,13 @@ import logoImg from "../assets/images/logo-high.png";
     display: none;
     align-items: center;
     gap: 0.4rem;
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-size: 0.55rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #64748b;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 999px;
     padding: 0.3rem 0.8rem;
   }
@@ -293,8 +500,13 @@ import logoImg from "../assets/images/logo-high.png";
   }
 
   @keyframes dot-pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.35; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
   }
 
   /* CTA button */
@@ -307,18 +519,20 @@ import logoImg from "../assets/images/logo-high.png";
     border: none;
     padding: 0.55rem 1.1rem;
     border-radius: 6px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-weight: 700;
     font-size: 0.62rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .nav-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0,242,254,0.35);
+    box-shadow: 0 6px 24px rgba(0, 242, 254, 0.35);
   }
 
   .nav-cta-icon {
@@ -332,8 +546,8 @@ import logoImg from "../assets/images/logo-high.png";
     display: none;
     flex-direction: column;
     gap: 5px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 0.55rem 0.65rem;
     cursor: pointer;
@@ -341,7 +555,7 @@ import logoImg from "../assets/images/logo-high.png";
   }
 
   .nav-hamburger:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .ham-line {
@@ -350,28 +564,372 @@ import logoImg from "../assets/images/logo-high.png";
     height: 1.5px;
     background: #f0f6ff;
     border-radius: 999px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
   }
 
   /* hamburger open state */
-  .nav-hamburger.is-open #hl-1 { transform: translateY(6.5px) rotate(45deg); }
-  .nav-hamburger.is-open #hl-2 { opacity: 0; transform: scaleX(0); }
-  .nav-hamburger.is-open #hl-3 { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-hamburger.is-open #hl-1 {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-hamburger.is-open #hl-2 {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .nav-hamburger.is-open #hl-3 {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
 
-  /* ── Mobile menu ── */
+  /* ══ MOBILE FULL-SCREEN OVERLAY ══ */
   .nav-mobile-menu {
     position: fixed;
     inset: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px);
+    z-index: 199;
     opacity: 0;
     visibility: hidden;
     transition:
-      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 199;
+      opacity 0.4s ease,
+      visibility 0.4s ease;
+  }
+  .nav-mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Scanline sweep */
+  .mob-scanline {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 242, 254, 0.015) 2px,
+      rgba(0, 242, 254, 0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Corner brackets */
+  .mob-corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.3s;
+  }
+  .nav-mobile-menu.is-open .mob-corner {
+    opacity: 1;
+  }
+  .mob-corner--tl {
+    top: 12px;
+    left: 12px;
+    border-top: 1.5px solid rgba(0, 242, 254, 0.6);
+    border-left: 1.5px solid rgba(0, 242, 254, 0.6);
+  }
+  .mob-corner--tr {
+    top: 12px;
+    right: 12px;
+    border-top: 1.5px solid rgba(0, 242, 254, 0.6);
+    border-right: 1.5px solid rgba(0, 242, 254, 0.6);
+  }
+  .mob-corner--bl {
+    bottom: 12px;
+    left: 12px;
+    border-bottom: 1.5px solid rgba(0, 242, 254, 0.6);
+    border-left: 1.5px solid rgba(0, 242, 254, 0.6);
+  }
+  .mob-corner--br {
+    bottom: 12px;
+    right: 12px;
+    border-bottom: 1.5px solid rgba(0, 242, 254, 0.6);
+    border-right: 1.5px solid rgba(0, 242, 254, 0.6);
+  }
+
+  /* Main panel */
+  .nav-mobile-links {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(
+        ellipse 80% 40% at 50% 0%,
+        rgba(0, 242, 254, 0.06) 0%,
+        transparent 60%
+      ),
+      linear-gradient(180deg, #020813 0%, #030a18 100%);
+    overflow-y: auto;
+    z-index: 2;
+    transform: scale(0.97);
+    opacity: 0;
+    transition:
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.45s ease;
+  }
+  .nav-mobile-menu.is-open .nav-mobile-links {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Header */
+  .mob-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 242, 254, 0.1);
+    position: relative;
+  }
+  .mob-header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 242, 254, 0.4),
+      transparent
+    );
+  }
+  .mob-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .mob-header-logo {
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
+  }
+  .mob-header-title {
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #f0f6ff;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.15rem 0;
+  }
+  .mob-accent {
+    color: #00f2fe;
+  }
+  .mob-header-sub {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.58rem;
+    color: rgba(0, 242, 254, 0.45);
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  /* Close button */
+  .mob-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    background: rgba(0, 242, 254, 0.04);
+    color: rgba(240, 246, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    clip-path: polygon(
+      8px 0%,
+      100% 0%,
+      100% calc(100% - 8px),
+      calc(100% - 8px) 100%,
+      0% 100%,
+      0% 8px
+    );
+  }
+  .mob-close:hover {
+    border-color: rgba(0, 242, 254, 0.6);
+    background: rgba(0, 242, 254, 0.1);
+    color: #00f2fe;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+  }
+
+  /* Status bar */
+  .mob-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.5rem;
+    background: rgba(0, 242, 254, 0.03);
+    border-bottom: 1px solid rgba(0, 242, 254, 0.06);
+  }
+  .mob-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00f2fe;
+    box-shadow: 0 0 8px #00f2fe;
+    flex-shrink: 0;
+    animation: mob-pulse 2s infinite;
+  }
+  @keyframes mob-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 8px #00f2fe;
+    }
+    50% {
+      opacity: 0.4;
+      box-shadow: 0 0 4px #00f2fe;
+    }
+  }
+  .mob-status-text {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.55rem;
+    color: rgba(0, 242, 254, 0.4);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Nav list */
+  .mob-nav-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 0;
+  }
+
+  /* Nav item */
+  @keyframes mob-item-in {
+    from {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .mob-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.75rem;
+    text-decoration: none;
+    color: rgba(240, 246, 255, 0.65);
+    border-left: 2px solid transparent;
+    position: relative;
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease;
+    opacity: 0;
+  }
+  .nav-mobile-menu.is-open .mob-nav-item {
+    animation: mob-item-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(0.1s + var(--i) * 0.055s);
+  }
+  .mob-nav-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 1.75rem;
+    right: 1.75rem;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .mob-nav-item:hover {
+    color: #00f2fe;
+    border-left-color: rgba(0, 242, 254, 0.7);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 242, 254, 0.07) 0%,
+      transparent 70%
+    );
+  }
+  .mob-nav-item:hover .mob-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  .mob-idx {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.65rem;
+    color: rgba(0, 242, 254, 0.4);
+    letter-spacing: 0.04em;
+    min-width: 28px;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid rgba(0, 242, 254, 0.15);
+    background: rgba(0, 242, 254, 0.04);
+    text-align: center;
+    transition: all 0.25s ease;
+  }
+  .mob-nav-item:hover .mob-idx {
+    color: rgba(0, 242, 254, 0.8);
+    border-color: rgba(0, 242, 254, 0.4);
+    background: rgba(0, 242, 254, 0.08);
+  }
+
+  .mob-label {
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .mob-arrow {
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    color: rgba(0, 242, 254, 0.7);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  /* CTA block */
+  .mob-cta-wrap {
+    padding: 1.5rem 1.75rem 2rem;
+    border-top: 1px solid rgba(0, 242, 254, 0.08);
+  }
+  .mob-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    color: #020811;
+    border: none;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition:
+      box-shadow 0.25s ease,
+      filter 0.25s ease;
+    box-shadow: 0 0 28px rgba(0, 242, 254, 0.35);
+  }
+  .mob-cta:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 48px rgba(0, 242, 254, 0.6);
+  }
+  .mob-cta-sub {
+    margin: 0.6rem 0 0;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.55rem;
+    color: rgba(0, 242, 254, 0.3);
+    letter-spacing: 0.1em;
+    text-align: center;
   }
 
   .nav-mobile-menu.is-open {
@@ -384,445 +942,123 @@ import logoImg from "../assets/images/logo-high.png";
     left: 0;
     top: 0;
     height: 100vh;
-    width: min(380px, 85vw);
+    width: 100%;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, rgba(2, 4, 17, 0.98) 0%, rgba(5, 8, 18, 0.98) 100%);
-    border-right: 1px solid rgba(0, 242, 254, 0.15);
+    background: linear-gradient(180deg, #020411 0%, #050812 100%);
     padding: 0;
     gap: 0;
     overflow-y: auto;
-    transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(16px);
+    transform: translateY(-20px);
+    opacity: 0;
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   .nav-mobile-menu.is-open .nav-mobile-links {
-    transform: translateX(0);
-  }
-
-  .nav-mobile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    border-bottom: 1px solid rgba(0, 242, 254, 0.1);
-    gap: 1rem;
-    background: linear-gradient(180deg, rgba(0, 242, 254, 0.05) 0%, transparent 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .nav-mobile-header::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(0, 242, 254, 0.3) 50%, transparent 100%);
-  }
-
-  .nav-mobile-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #f0f6ff;
-    margin: 0;
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
-  }
-
-  .nav-mobile-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: #f0f6ff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .nav-mobile-close:hover {
-    background: rgba(0, 242, 254, 0.1);
-    border-color: rgba(0, 242, 254, 0.3);
-    color: #00f2fe;
-  }
-
-  .nav-mobile-close svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .nav-mobile-sections {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 1rem 0;
-    flex: 1;
-    position: relative;
-  }
-
-  .nav-mobile-sections::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: linear-gradient(180deg, rgba(0, 242, 254, 0.3) 0%, transparent 100%);
-  }
-
-  .nav-mobile-register-spacing {
-    padding-top: 1.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
-    border-top: 1px solid rgba(0, 242, 254, 0.1);
-    margin-top: 0.5rem;
-  }
-
-  .nav-mobile-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #64748b;
-    text-decoration: none;
-    padding: 1.1rem 1.5rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .nav-mobile-link::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(0, 242, 254, 0.08) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  /* Glow effect on hover */
-  .nav-mobile-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(0, 242, 254, 0.1) 50%,
-      transparent 100%
-    );
-    opacity: 0;
-    animation: none;
-    transition: opacity 0.25s ease;
-    pointer-events: none;
-  }
-
-  .nav-mobile-link:hover {
-    color: #00f2fe;
-    border-left-color: rgba(0, 242, 254, 0.5);
-    border-right-color: rgba(0, 242, 254, 0.2);
-    background: rgba(0, 242, 254, 0.08);
-    padding-left: 1.8rem;
-  }
-
-  .nav-mobile-link:hover::before {
+    transform: translateY(0);
     opacity: 1;
-  }
-
-  .nav-mobile-link:hover::after {
-    opacity: 1;
-    animation: scan-line 0.6s ease-in-out;
-  }
-
-  @keyframes scan-line {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  .nav-mobile-link--active {
-    color: #00f2fe;
-    background: linear-gradient(90deg, rgba(0, 242, 254, 0.15) 0%, rgba(0, 242, 254, 0.05) 100%);
-    border-left-color: #00f2fe;
-    border-right-color: #00f2fe;
-    box-shadow:
-      inset -12px 0 20px rgba(0, 242, 254, 0.08),
-      inset 3px 0 0 #00f2fe,
-      0 0 20px rgba(0, 242, 254, 0.2);
-    font-weight: 700;
-    padding-left: 1.8rem;
-    animation: active-pulse 2.5s ease-in-out infinite;
-  }
-
-  @keyframes active-pulse {
-    0%, 100% {
-      box-shadow:
-        inset -12px 0 20px rgba(0, 242, 254, 0.08),
-        inset 3px 0 0 #00f2fe,
-        0 0 20px rgba(0, 242, 254, 0.2);
-      background: linear-gradient(90deg, rgba(0, 242, 254, 0.15) 0%, rgba(0, 242, 254, 0.05) 100%);
-    }
-    50% {
-      box-shadow:
-        inset -12px 0 20px rgba(0, 242, 254, 0.12),
-        inset 3px 0 0 #00f2fe,
-        0 0 30px rgba(0, 242, 254, 0.4);
-      background: linear-gradient(90deg, rgba(0, 242, 254, 0.2) 0%, rgba(0, 242, 254, 0.08) 100%);
-    }
-  }
-
-  .nav-mobile-link--active::before {
-    opacity: 1;
-  }
-
-  .nav-mobile-link--active::after {
-    opacity: 1;
-    animation: scan-line-active 1.5s ease-in-out infinite;
-  }
-
-  @keyframes scan-line-active {
-    0%, 100% {
-      transform: translateX(-100%);
-      opacity: 0.5;
-    }
-    50% {
-      transform: translateX(100%);
-      opacity: 1;
-    }
-  }
-
-  .nav-mobile-num {
-    font-size: 0.65rem;
-    color: rgba(0, 242, 254, 0.45);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    min-width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 242, 254, 0.05);
-    border: 1px solid rgba(0, 242, 254, 0.2);
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .nav-mobile-link:hover .nav-mobile-num {
-    background: rgba(0, 242, 254, 0.1);
-    border-color: rgba(0, 242, 254, 0.4);
-    color: rgba(0, 242, 254, 0.7);
-  }
-
-  .nav-mobile-link--active .nav-mobile-num {
-    color: #00f2fe;
-    text-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
-    background: rgba(0, 242, 254, 0.2);
-    border-color: #00f2fe;
-    box-shadow: 0 0 12px rgba(0, 242, 254, 0.5);
-  }
-
-  .nav-mobile-text {
-    flex: 1;
-  }
-
-  .nav-mobile-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-    color: #020811;
-    border: none;
-    padding: 0.9rem 1.5rem;
-    border-radius: 8px;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    width: 100%;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
-  }
-
-  .nav-mobile-cta::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  .nav-mobile-cta:hover {
-    transform: translateY(-3px);
-    box-shadow:
-      0 8px 32px rgba(0, 242, 254, 0.5),
-      0 0 20px rgba(79, 172, 254, 0.4);
-  }
-
-  .nav-mobile-cta:hover::before {
-    opacity: 1;
-  }
-
-  .nav-mobile-cta:active {
-    transform: translateY(-1px);
-  }
-
-  .nav-mobile-cta svg {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
   }
 
   /* ── Responsive show/hide ── */
+
+  /* ── Responsive show/hide ── */
   @media (max-width: 900px) {
-    .nav-links          { display: none; }
-    .nav-section-badge  { display: none !important; }
-    .nav-cta            { display: none; }
-    .nav-hamburger      { display: flex; }
+    .nav-links {
+      display: none;
+    }
+    .nav-section-badge {
+      display: none !important;
+    }
+    .nav-cta {
+      display: none;
+    }
+    .nav-hamburger {
+      display: flex;
+    }
   }
 
   @media (max-width: 480px) {
-    .nav-inner { padding: 1rem; }
-    .nav-brand-sub { display: none; }
+    .nav-inner {
+      padding: 1rem;
+    }
+    .nav-brand-sub {
+      display: none;
+    }
   }
 
   @media (hover: none), (pointer: coarse) {
-    .nav-mobile-menu {
-      overscroll-behavior: contain;
-    }
-
     .nav-mobile-links {
       -webkit-overflow-scrolling: touch;
     }
-
     .nav-brand:hover .nav-logo-img {
-      filter: drop-shadow(0 0 8px rgba(0,242,254,0.45));
+      filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.45));
     }
-
     .nav-link:hover {
       color: #64748b;
       background: transparent;
     }
-
-    .nav-link:hover::after {
-      transform: translateX(-50%) scaleX(0);
-    }
-
-    .nav-link.is-active:hover {
-      color: #00f2fe;
-    }
-
-    .nav-link.is-active:hover::after,
-    .nav-link.is-active::after {
-      transform: translateX(-50%) scaleX(1);
-    }
-
-    .nav-cta:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
+    .nav-cta:hover,
     .nav-hamburger:hover {
-      background: rgba(255,255,255,0.05);
-    }
-
-    .nav-mobile-close:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.1);
-      color: #f0f6ff;
-    }
-
-    .nav-mobile-link:hover {
-      color: #64748b;
-      border-left-color: transparent;
-      background: transparent;
-    }
-
-    .nav-mobile-link:hover::before {
-      opacity: 0;
-    }
-
-    .nav-mobile-link--active:hover {
-      color: #00f2fe;
-      background: rgba(0, 242, 254, 0.12);
-      border-left-color: #00f2fe;
-    }
-
-    .nav-mobile-link--active:hover::before {
-      opacity: 1;
-    }
-
-    .nav-mobile-cta:hover {
-      transform: none;
       box-shadow: none;
+      transform: none;
     }
-
-    .nav-mobile-cta:hover::before {
-      opacity: 0;
+    .mob-nav-item:hover {
+      color: rgba(240, 246, 255, 0.65);
+      background: transparent;
+      border-left-color: transparent;
     }
-
-    .nav-cta,
-    .nav-hamburger,
-    .nav-mobile-close,
-    .nav-mobile-link,
-    .nav-mobile-cta {
+    .mob-cta:hover {
+      filter: none;
+      box-shadow: 0 0 28px rgba(0, 242, 254, 0.35);
+    }
+    .mob-close,
+    .mob-nav-item,
+    .mob-cta,
+    .nav-hamburger {
       touch-action: manipulation;
     }
-
-    .nav-cta:active,
-    .nav-hamburger:active,
-    .nav-mobile-close:active,
-    .nav-mobile-link:active,
-    .nav-mobile-cta:active {
-      opacity: 0.86;
+    .mob-close:active,
+    .mob-nav-item:active,
+    .mob-cta:active,
+    .nav-hamburger:active {
+      opacity: 0.82;
     }
   }
 </style>
 
 <script>
-  const navRoot      = document.getElementById('site-nav-container') as HTMLElement;
-  const hamburger    = document.getElementById('hamburger') as HTMLButtonElement;
-  const mobileMenu   = document.getElementById('mobile-menu') as HTMLElement;
-  const mobileClose  = document.getElementById('mobile-close') as HTMLButtonElement;
-  const navLinks     = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
-  const mobileLinks  = document.querySelectorAll<HTMLAnchorElement>('.nav-mobile-link');
-  const sectionLabel = document.getElementById('nav-section-label') as HTMLElement;
+  const navRoot = document.getElementById("site-nav-container") as HTMLElement;
+  const hamburger = document.getElementById("hamburger") as HTMLButtonElement;
+  const mobileMenu = document.getElementById("mobile-menu") as HTMLElement;
+  const mobileClose = document.getElementById("mob-close") as HTMLButtonElement;
+  const sectionLabel = document.getElementById(
+    "nav-section-label",
+  ) as HTMLElement;
 
   /* ── Scroll-aware sticky ── */
   const handleScroll = () => {
     if (window.scrollY > 60) {
-      navRoot.classList.add('scrolled');
+      navRoot.classList.add("scrolled");
     } else {
-      navRoot.classList.remove('scrolled');
+      navRoot.classList.remove("scrolled");
     }
 
     /* Active section highlight */
-    const sections = ['home','about','prizes','timeline','rules','submission','organizers','contact'];
-    let current = 'home';
+    const sections = [
+      "home",
+      "about",
+      "prizes",
+      "timeline",
+      "rules",
+      "submission",
+      "organizers",
+      "contact",
+    ];
+    let current = "home";
     for (const id of sections.slice().reverse()) {
       const el = document.getElementById(id);
       if (el && el.getBoundingClientRect().top <= 120) {
@@ -830,46 +1066,48 @@ import logoImg from "../assets/images/logo-high.png";
         break;
       }
     }
-    navLinks.forEach(a => {
-      a.classList.toggle('is-active', a.getAttribute('href') === `#${current}`);
-    });
-
-    // No highlighting for mobile links
-
     if (sectionLabel) {
-      sectionLabel.textContent = current.charAt(0).toUpperCase() + current.slice(1);
+      sectionLabel.textContent =
+        current.charAt(0).toUpperCase() + current.slice(1);
     }
   };
 
   handleScroll();
-  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener("scroll", handleScroll, { passive: true });
 
   /* ── Close menu function ── */
   const closeMenu = () => {
-    hamburger?.classList.remove('is-open');
-    hamburger?.setAttribute('aria-expanded', 'false');
-    mobileMenu?.classList.remove('is-open');
-    mobileMenu?.setAttribute('aria-hidden', 'true');
+    hamburger?.classList.remove("is-open");
+    hamburger?.setAttribute("aria-expanded", "false");
+    mobileMenu?.classList.remove("is-open");
+    mobileMenu?.setAttribute("aria-hidden", "true");
+    // Move focus back to toggle button so focus isn't trapped in hidden menu
+    hamburger?.focus();
   };
 
   /* ── Hamburger toggle ── */
-  hamburger?.addEventListener('click', () => {
-    const isOpen = hamburger.classList.toggle('is-open');
-    hamburger.setAttribute('aria-expanded', String(isOpen));
-    mobileMenu?.classList.toggle('is-open', isOpen);
-    mobileMenu?.setAttribute('aria-hidden', String(!isOpen));
+  hamburger?.addEventListener("click", () => {
+    const isOpen = hamburger.classList.toggle("is-open");
+    hamburger.setAttribute("aria-expanded", String(isOpen));
+    mobileMenu?.classList.toggle("is-open", isOpen);
+    mobileMenu?.setAttribute("aria-hidden", String(!isOpen));
+
+    if (isOpen) {
+      // Focus the close button when menu opens
+      setTimeout(() => mobileClose?.focus(), 50);
+    }
   });
 
   /* ── Close menu on close button click ── */
-  mobileClose?.addEventListener('click', closeMenu);
+  mobileClose?.addEventListener("click", closeMenu);
 
   /* ── Close menu when clicking on background ── */
-  mobileMenu?.addEventListener('click', (e) => {
+  mobileMenu?.addEventListener("click", (e) => {
     if (e.target === mobileMenu) closeMenu();
   });
 
   /* ── Close menu on link click ── */
-  document.querySelectorAll('[ u]').forEach(el => {
-    el.addEventListener('click', closeMenu);
+  document.querySelectorAll(".nav-mobile-link").forEach((el) => {
+    el.addEventListener("click", closeMenu);
   });
 </script>
