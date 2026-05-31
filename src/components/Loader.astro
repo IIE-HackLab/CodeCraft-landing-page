@@ -5,563 +5,510 @@ interface Props {
 const { logoSrc } = Astro.props;
 ---
 
-<div class="loader-overlay" id="loader" aria-hidden="true">
-  <!-- Scanline Overlay -->
-  <div class="scanline"></div>
+<div class="ld-overlay" id="loader" aria-hidden="true">
+  <!-- Scanline texture -->
+  <div class="ld-scanlines" aria-hidden="true"></div>
 
-  <!-- Animated Background -->
-  <div class="loader-bg">
-    <div class="loader-grid"></div>
-    <div class="glow-orb glow-1"></div>
-    <div class="glow-orb glow-2"></div>
-    <div class="glow-orb glow-3"></div>
+  <!-- Background animated circuit grid -->
+  <svg class="ld-circuit-bg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <!-- Horizontal traces -->
+    <path class="tr tr-1" d="M -100 150 L 200 150 L 240 110 L 560 110 L 600 150 L 900 150"/>
+    <path class="tr tr-2" d="M -100 450 L 180 450 L 220 490 L 580 490 L 620 450 L 900 450"/>
+    <path class="tr tr-3" d="M -100 300 L 140 300 L 180 260 L 620 260 L 660 300 L 900 300"/>
+    <!-- Vertical traces -->
+    <path class="tr tr-4" d="M 200 -100 L 200 150 L 240 190 L 240 410 L 200 450 L 200 700"/>
+    <path class="tr tr-5" d="M 600 -100 L 600 110 L 560 150 L 560 450 L 600 490 L 600 700"/>
+    <path class="tr tr-6" d="M 400 -100 L 400 80 L 440 120 L 440 480 L 400 520 L 400 700"/>
+    <!-- Corner traces -->
+    <path class="tr tr-7" d="M -100 80 L 100 80 L 140 40 L 300 40 L 340 80 L 340 120"/>
+    <path class="tr tr-8" d="M 900 520 L 700 520 L 660 560 L 500 560 L 460 520 L 460 480"/>
+    <!-- Nodes / junction dots -->
+    <circle class="nd" cx="200" cy="150" r="5"/>
+    <circle class="nd" cx="240" cy="110" r="4"/>
+    <circle class="nd" cx="560" cy="110" r="4"/>
+    <circle class="nd" cx="600" cy="150" r="5"/>
+    <circle class="nd" cx="200" cy="450" r="5"/>
+    <circle class="nd" cx="220" cy="490" r="4"/>
+    <circle class="nd" cx="580" cy="490" r="4"/>
+    <circle class="nd" cx="600" cy="450" r="5"/>
+    <circle class="nd nd-pulse" cx="240" cy="300" r="5"/>
+    <circle class="nd nd-pulse" cx="560" cy="300" r="5"/>
+    <circle class="nd" cx="400" cy="120" r="4"/>
+    <circle class="nd" cx="400" cy="480" r="4"/>
+  </svg>
+
+  <!-- Center content -->
+  <div class="ld-center">
+    <!-- Orbital rings -->
+    <div class="ld-rings" aria-hidden="true">
+      <div class="ld-ring ring-o"></div>
+      <div class="ld-ring ring-m"></div>
+      <div class="ld-ring ring-i"></div>
+    </div>
+
+    <!-- Core chip logo -->
+    <div class="ld-chip">
+      <!-- MCU pin rows -->
+      <div class="ld-pins pins-top"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="ld-pins pins-bottom"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="ld-pins pins-left"><i></i><i></i><i></i></div>
+      <div class="ld-pins pins-right"><i></i><i></i><i></i></div>
+      <!-- Logo inside chip -->
+      <div class="ld-chip-inner">
+        <img src={logoSrc} alt="CodeCraft" class="ld-logo" />
+      </div>
+      <!-- LED indicators -->
+      <div class="ld-led led-a"></div>
+      <div class="ld-led led-b"></div>
+    </div>
+
+    <!-- SVG progress ring -->
+    <svg class="ld-progress-svg" viewBox="0 0 180 180" aria-hidden="true">
+      <circle class="prg-track" cx="90" cy="90" r="82"/>
+      <circle class="prg-fill" id="ld-prg-fill" cx="90" cy="90" r="82"
+        stroke-dasharray="515.2"
+        stroke-dashoffset="515.2"/>
+      <!-- Corner tick marks -->
+      <line class="prg-tick" x1="90" y1="4" x2="90" y2="16"/>
+      <line class="prg-tick" x1="176" y1="90" x2="164" y2="90"/>
+      <line class="prg-tick" x1="90" y1="176" x2="90" y2="164"/>
+      <line class="prg-tick" x1="4" y1="90" x2="16" y2="90"/>
+    </svg>
   </div>
 
-  <div class="loader-content">
-    <!-- Animated Logo -->
-    <div class="logo-container">
-      <div class="logo-frame">
-        <img src={logoSrc} alt="CodeCraft" class="loader-logo glitch-logo" />
-        <div class="logo-pulse"></div>
-        <div class="logo-shine"></div>
-      </div>
-    </div>
-
-    <!-- Terminal Section -->
-    <div class="terminal-builder">
-      <div class="terminal-window">
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <div class="code-dot red"></div>
-            <div class="code-dot yellow"></div>
-            <div class="code-dot green"></div>
-          </div>
-          <span class="terminal-title">SYS_BOOT_SEQ_V9</span>
-          <span class="terminal-status" id="sys-status">OFFLINE</span>
-        </div>
-        <div class="terminal-content" id="terminal-content">
-          <!-- JS injects lines here -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Progress Bar -->
-    <div class="loader-footer">
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div class="progress-fill" id="loader-progress"></div>
-          <div class="progress-glow"></div>
-        </div>
-        <div class="progress-meta">
-          <span id="loader-percent" class="glitch-text" data-text="0%">0%</span>
-          <span class="pulse-text" id="loading-msg">PREPARING FOR IMMERSION...</span>
-        </div>
-      </div>
-    </div>
+  <!-- Bottom status bar -->
+  <div class="ld-status-bar">
+    <span class="ld-pct" id="ld-pct">0%</span>
+    <span class="ld-msg" id="ld-msg">INITIALIZING CODECRAFT SYSTEMS...</span>
+    <span class="ld-ver">v2026.1</span>
   </div>
 </div>
 
 <style>
-  .loader-overlay {
+  /* ── Overlay ── */
+  .ld-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #02040a;
+    background: #020811;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--c-cyan, #00f2fe);
-    font-family: var(--font-body), sans-serif;
     overflow: hidden;
-    transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1), opacity 1s ease;
+    transition: opacity 1s cubic-bezier(0.76, 0, 0.24, 1),
+                transform 1s cubic-bezier(0.76, 0, 0.24, 1);
   }
 
-  .loader-overlay.is-hidden {
-    transform: translateY(-100%);
-    pointer-events: none;
+  .ld-overlay.is-hidden {
     opacity: 0;
-  }
-
-  /* Scanline Overlay */
-  .scanline {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2));
-    background-size: 100% 4px;
-    z-index: 100;
+    transform: scale(1.04);
     pointer-events: none;
-    opacity: 0.6;
   }
 
-  /* Background Animation */
-  .loader-bg {
+  /* ── Scanlines ── */
+  .ld-scanlines {
     position: absolute;
     inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 242, 254, 0.012) 3px,
+      rgba(0, 242, 254, 0.012) 4px
+    );
     pointer-events: none;
-    overflow: hidden;
+    z-index: 1;
+    animation: scan-drift 12s linear infinite;
   }
 
-  .loader-grid {
-    position: absolute;
-    inset: -50%;
-    background-image:
-      linear-gradient(rgba(0, 242, 254, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 242, 254, 0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    transform: perspective(500px) rotateX(60deg) translateY(-100px);
-    animation: grid-move 4s linear infinite;
+  @keyframes scan-drift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 800px; }
   }
 
-  @keyframes grid-move {
-    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-    100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
-  }
-
-  .glow-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.15;
-    animation: float 8s ease-in-out infinite;
-  }
-
-  .glow-1 {
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.5), transparent);
-    top: -100px;
-    left: -100px;
-    animation-delay: 0s;
-  }
-
-  .glow-2 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(79, 172, 254, 0.4), transparent);
-    bottom: -150px;
-    right: -150px;
-    animation-delay: 2s;
-  }
-
-  .glow-3 {
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, rgba(142, 45, 226, 0.3), transparent);
-    top: 50%;
-    right: 10%;
-    animation-delay: 4s;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    33% { transform: translate(30px, -30px); }
-    66% { transform: translate(-20px, 20px); }
-  }
-
-  /* Content Layout */
-  .loader-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
-    max-width: 800px;
-    width: 90%;
-  }
-
-  /* Logo Container */
-  .logo-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .logo-frame {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .loader-logo {
-    width: 110px;
-    height: 110px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8));
-    animation: logo-float 3s ease-in-out infinite, glitch-anim 5s infinite;
-    position: relative;
-    z-index: 2;
-  }
-
-  @keyframes logo-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes glitch-anim {
-    0% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
-    20% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
-    21% { filter: drop-shadow(3px 0 0 rgba(255,0,0,0.5)) drop-shadow(-3px 0 0 rgba(0,255,255,0.5)); transform: translate(-2px, 2px); }
-    22% { filter: drop-shadow(-3px 0 0 rgba(255,0,0,0.5)) drop-shadow(3px 0 0 rgba(0,255,255,0.5)); transform: translate(2px, -2px); }
-    23% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
-    100% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.8)); transform: translate(0); }
-  }
-
-  .logo-pulse {
-    position: absolute;
-    inset: -15px;
-    border: 2px solid rgba(0, 242, 254, 0.4);
-    border-radius: 50%;
-    animation: pulse-ring 2.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
-  }
-
-  .logo-shine {
+  /* ── Background circuit SVG ── */
+  .ld-circuit-bg {
     position: absolute;
     inset: 0;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, transparent, rgba(0, 242, 254, 0.4), transparent);
-    animation: spin-shine 2s linear infinite;
-  }
-
-  @keyframes pulse-ring {
-    0% { transform: scale(0.8); opacity: 1; border-color: rgba(0, 242, 254, 0.8); }
-    100% { transform: scale(1.6); opacity: 0; border-color: transparent; }
-  }
-
-  @keyframes spin-shine {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Terminal Section */
-  .terminal-builder {
     width: 100%;
-    max-width: 650px;
-    perspective: 1000px;
+    height: 100%;
+    pointer-events: none;
   }
 
-  .terminal-window {
-    background: rgba(4, 8, 16, 0.85);
-    border: 1px solid rgba(0, 242, 254, 0.3);
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(0, 242, 254, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    transform: rotateX(5deg);
-    transition: transform 0.3s ease;
+  /* Circuit trace paths */
+  .tr {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+  }
+  .tr-1 { stroke: rgba(0, 242, 254, 0.25); animation: draw-tr 2.2s 0.1s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-2 { stroke: rgba(0, 242, 254, 0.2);  animation: draw-tr 2.2s 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-3 { stroke: rgba(79, 172, 254, 0.2); animation: draw-tr 2.4s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-4 { stroke: rgba(79, 172, 254, 0.22);animation: draw-tr 2.4s 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-5 { stroke: rgba(0, 242, 254, 0.18); animation: draw-tr 2.0s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-6 { stroke: rgba(142, 45, 226, 0.2); animation: draw-tr 2.6s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-7 { stroke: rgba(79, 172, 254, 0.15);animation: draw-tr 1.8s 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .tr-8 { stroke: rgba(142, 45, 226, 0.15);animation: draw-tr 1.8s 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+  @keyframes draw-tr {
+    to { stroke-dashoffset: 0; }
   }
 
-  .terminal-window:hover {
-    transform: rotateX(0deg);
+  /* Junction nodes */
+  .nd {
+    fill: rgba(0, 242, 254, 0.5);
+    opacity: 0;
+    animation: nd-appear 0.4s 1.0s ease forwards;
   }
 
-  .terminal-header {
-    background: rgba(0, 242, 254, 0.1);
-    padding: 0.5rem 1rem;
+  .nd-pulse {
+    animation: nd-appear 0.4s 1.0s ease forwards,
+               nd-pulse 2s 1.4s ease-in-out infinite;
+  }
+
+  @keyframes nd-appear {
+    to { opacity: 1; }
+  }
+
+  @keyframes nd-pulse {
+    0%, 100% { r: 5; fill: rgba(0, 242, 254, 0.5); }
+    50%       { r: 7; fill: rgba(0, 242, 254, 0.9); filter: drop-shadow(0 0 4px #00f2fe); }
+  }
+
+  /* ── Center region ── */
+  .ld-center {
+    position: relative;
+    width: 220px;
+    height: 220px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+    justify-content: center;
+    z-index: 2;
   }
 
-  .terminal-dots {
+  /* ── Orbital rings ── */
+  .ld-rings {
+    position: absolute;
+    inset: 0;
     display: flex;
-    gap: 6px;
+    align-items: center;
+    justify-content: center;
   }
 
-  .code-dot {
-    width: 10px;
-    height: 10px;
+  .ld-ring {
+    position: absolute;
     border-radius: 50%;
+    border: 1px dashed rgba(0, 242, 254, 0.18);
   }
 
-  .code-dot.red { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
-  .code-dot.yellow { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
-  .code-dot.green { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
-
-  .terminal-title {
-    margin-left: 1rem;
-    font-size: 0.7rem;
-    color: rgba(0, 242, 254, 0.8);
-    font-family: var(--font-mono), monospace;
-    letter-spacing: 0.15em;
-    font-weight: bold;
+  .ring-o {
+    width: 210px;
+    height: 210px;
+    animation: spin-cw 22s linear infinite;
+    border-color: rgba(0, 242, 254, 0.12);
+    border-style: solid;
+  }
+  .ring-m {
+    width: 170px;
+    height: 170px;
+    animation: spin-ccw 14s linear infinite;
+    border-color: rgba(79, 172, 254, 0.2);
+  }
+  .ring-i {
+    width: 130px;
+    height: 130px;
+    animation: spin-cw 9s linear infinite;
+    border-color: rgba(142, 45, 226, 0.2);
   }
 
-  .terminal-status {
-    margin-left: auto;
-    font-size: 0.65rem;
-    color: #ff5f56;
-    font-family: var(--font-mono), monospace;
-    letter-spacing: 0.1em;
-    animation: blink 1s infinite;
+  @keyframes spin-cw  { to { transform: rotate(360deg);  } }
+  @keyframes spin-ccw { to { transform: rotate(-360deg); } }
+
+  /* ── Progress SVG ring ── */
+  .ld-progress-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
   }
 
-  .terminal-status.online {
-    color: #27c93f;
-    animation: none;
-    text-shadow: 0 0 8px #27c93f;
+  .prg-track {
+    fill: none;
+    stroke: rgba(0, 242, 254, 0.06);
+    stroke-width: 2;
   }
 
-  .terminal-content {
-    padding: 1.5rem;
-    font-family: var(--font-mono), monospace;
-    font-size: 0.85rem;
-    color: #00f2fe;
-    height: 180px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    overflow: hidden;
+  .prg-fill {
+    fill: none;
+    stroke: url(#prg-grad);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.08s linear;
+    filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.6));
+  }
+
+  .prg-tick {
+    stroke: rgba(0, 242, 254, 0.3);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  /* ── MCU Chip ── */
+  .ld-chip {
     position: relative;
-    text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+    width: 86px;
+    height: 86px;
+    background: linear-gradient(145deg, #0f1a2e 0%, #020811 100%);
+    border: 1.5px solid rgba(0, 242, 254, 0.35);
+    border-radius: 8px;
+    box-shadow:
+      0 0 24px rgba(0, 242, 254, 0.12),
+      inset 0 0 12px rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: chip-boot 0.6s 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
-  .terminal-content::after {
+  @keyframes chip-boot {
+    from { transform: scale(0.6); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  /* Chip inner glow sweep */
+  .ld-chip-inner {
+    width: 54px;
+    height: 54px;
+    background: #020409;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ld-chip-inner::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0; height: 30px;
-    background: linear-gradient(transparent, rgba(4, 8, 16, 0.9));
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.15), transparent);
+    transform: translateX(-100%);
+    animation: chip-sweep 2.5s 1.4s ease infinite;
   }
 
-  .term-line {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: line-appear 0.2s forwards;
+  @keyframes chip-sweep {
+    to { transform: translateX(200%); }
   }
 
-  .term-prefix {
-    color: #4facfe;
-    margin-right: 8px;
+  .ld-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.6));
+    animation: logo-pulse 2s 1.5s ease-in-out infinite;
   }
 
-  .term-success { color: #27c93f; }
-  .term-warn { color: #ffbd2e; }
-  .term-err { color: #ff5f56; }
-
-  .term-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    background: #00f2fe;
-    margin-left: 5px;
-    animation: blink 1s step-end infinite;
-    vertical-align: middle;
+  @keyframes logo-pulse {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.6)); }
+    50%       { filter: drop-shadow(0 0 12px rgba(0, 242, 254, 1)) brightness(1.2); }
   }
 
-  @keyframes line-appear {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Footer & Progress */
-  .loader-footer {
-    width: 100%;
-    max-width: 650px;
-    margin-top: auto;
-  }
-
-  .progress-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .progress-bar {
-    width: 100%;
-    height: 4px;
-    background: rgba(0, 242, 254, 0.05);
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(0, 242, 254, 0.2);
-  }
-
-  .progress-fill {
-    width: 0%;
-    height: 100%;
-    background: #00f2fe;
-    box-shadow: 0 0 15px #00f2fe, 0 0 30px #4facfe;
-    transition: width 0.1s linear;
-    position: relative;
-  }
-
-  .progress-glow {
+  /* MCU pins */
+  .ld-pins {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 50px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-    filter: blur(5px);
-    animation: progress-scan 1s infinite linear;
-    mix-blend-mode: overlay;
-  }
-
-  @keyframes progress-scan {
-    0% { transform: translateX(-100px); }
-    100% { transform: translateX(800px); }
-  }
-
-  .progress-meta {
     display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: rgba(0, 242, 254, 0.8);
-    font-family: var(--font-mono), monospace;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    gap: 7px;
+  }
+  .ld-pins i {
+    display: block;
+    background: rgba(0, 242, 254, 0.5);
+    border-radius: 1px;
+    animation: pin-flicker 3s ease-in-out infinite;
+  }
+  .ld-pins i:nth-child(2) { animation-delay: 0.4s; }
+  .ld-pins i:nth-child(3) { animation-delay: 0.8s; }
+  .ld-pins i:nth-child(4) { animation-delay: 1.2s; }
+  .ld-pins i:nth-child(5) { animation-delay: 1.6s; }
+
+  @keyframes pin-flicker {
+    0%, 80%, 100% { background: rgba(0, 242, 254, 0.45); box-shadow: none; }
+    90%           { background: #00f2fe; box-shadow: 0 0 4px #00f2fe; }
   }
 
-  .pulse-text {
-    animation: text-flicker 3s linear infinite;
+  .pins-top, .pins-bottom { flex-direction: row; left: 50%; transform: translateX(-50%); }
+  .pins-top    { top: -12px; }
+  .pins-top i, .pins-bottom i { width: 4px; height: 10px; }
+  .pins-bottom { bottom: -12px; }
+
+  .pins-left, .pins-right { flex-direction: column; top: 50%; transform: translateY(-50%); }
+  .pins-left  { left: -12px; }
+  .pins-right { right: -12px; }
+  .pins-left i, .pins-right i { width: 10px; height: 4px; }
+
+  /* LED dots on chip */
+  .ld-led {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+  .led-a {
+    top: 6px; right: 6px;
+    background: #00f2fe;
+    box-shadow: 0 0 6px #00f2fe;
+    animation: led-blink 1.1s 1.5s step-end infinite;
+  }
+  .led-b {
+    bottom: 6px; left: 6px;
+    background: #4facfe;
+    box-shadow: 0 0 6px #4facfe;
+    animation: led-blink 0.7s 1.8s step-end infinite;
   }
 
-  @keyframes text-flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-    20%, 24%, 55% { opacity: 0.5; }
-    22% { opacity: 0.3; }
-  }
-
-  @keyframes blink {
+  @keyframes led-blink {
     0%, 49% { opacity: 1; }
     50%, 100% { opacity: 0; }
   }
 
+  /* ── Bottom status bar ── */
+  .ld-status-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 2rem;
+    border-top: 1px solid rgba(0, 242, 254, 0.08);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+    opacity: 0;
+    animation: bar-in 0.5s 1s ease forwards;
+  }
+
+  @keyframes bar-in {
+    to { opacity: 1; }
+  }
+
+  .ld-pct {
+    font-family: "Orbitron", monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #00f2fe;
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+    letter-spacing: 0.08em;
+    min-width: 3.5ch;
+  }
+
+  .ld-msg {
+    font-family: "Orbitron", monospace;
+    font-size: 0.6rem;
+    color: rgba(0, 242, 254, 0.45);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    animation: msg-flicker 3s ease-in-out infinite;
+  }
+
+  @keyframes msg-flicker {
+    0%, 19%, 21%, 100% { opacity: 0.7; }
+    20% { opacity: 0.3; }
+  }
+
+  .ld-ver {
+    font-family: "Orbitron", monospace;
+    font-size: 0.6rem;
+    color: rgba(79, 172, 254, 0.4);
+    letter-spacing: 0.12em;
+  }
+
   /* Responsive */
-  @media (max-width: 640px) {
-    .loader-content {
-      gap: 2rem;
-    }
-    .terminal-content {
-      font-size: 0.7rem;
-      height: 150px;
-    }
-    .progress-meta {
-      font-size: 0.6rem;
-    }
+  @media (max-width: 480px) {
+    .ld-center { width: 180px; height: 180px; }
+    .ring-o { width: 175px; height: 175px; }
+    .ring-m { width: 140px; height: 140px; }
+    .ring-i { width: 108px; height: 108px; }
+    .ld-chip { width: 74px; height: 74px; }
+    .ld-chip-inner { width: 46px; height: 46px; }
+    .ld-logo { width: 28px; height: 28px; }
+    .ld-msg { display: none; }
   }
 </style>
 
+<!-- Gradient def injected into first SVG usage -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="prg-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#00f2fe"/>
+      <stop offset="60%"  stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#8e2de2"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <script>
-  const loader = document.getElementById('loader');
-  const progress = document.getElementById('loader-progress');
-  const percent = document.getElementById('loader-percent');
-  const msg = document.getElementById('loading-msg');
-  const termContent = document.getElementById('terminal-content');
-  const sysStatus = document.getElementById('sys-status');
-  
-  const originalBodyOverflow = document.body.style.overflow;
-  const originalRootOverflow = document.documentElement.style.overflow;
-  const originalScrollBehavior = document.documentElement.style.scrollBehavior;
+  const overlay = document.getElementById('loader') as HTMLElement;
+  const prgFill = document.getElementById('ld-prg-fill') as unknown as SVGCircleElement;
+  const pctEl   = document.getElementById('ld-pct') as HTMLElement;
+  const msgEl   = document.getElementById('ld-msg') as HTMLElement;
 
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
+  const CIRCUMFERENCE = 515.2;
 
-  function forceTopScroll() {
-    document.documentElement.style.scrollBehavior = 'auto';
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }
-
-  function clearInitialHashScroll() {
-    if (!window.location.hash) return;
-    history.replaceState(null, document.title, window.location.pathname + window.location.search);
-  }
-
-  const bootLogs = [
-    { text: "Initiating neural handshake...", delay: 200 },
-    { text: "Bypassing mainstream protocols [OK]", delay: 400, type: "term-success" },
-    { text: "Decrypting hackathon matrix...", delay: 700 },
-    { text: "Warning: High energy output detected", delay: 1000, type: "term-warn" },
-    { text: "Synthesizing innovation nodes...", delay: 1300 },
-    { text: "Compiling reality distortion field [DONE]", delay: 1700, type: "term-success" },
-    { text: "Loading CodeCraft core engine...", delay: 2000 },
-    { text: "Override limits active.", delay: 2300, type: "term-warn" },
-    { text: "System fully operational.", delay: 2600, type: "term-success" },
-    { text: "Welcome to the next level.", delay: 2900 }
+  const messages = [
+    'INITIALIZING CODECRAFT SYSTEMS...',
+    'LINKING CODE TO LOGIC GATES...',
+    'CALIBRATING HARDWARE NODES...',
+    'SYNCING INNOVATION MATRIX...',
+    'COMPILING HACKATHON CORE...',
+    'ALL SYSTEMS ONLINE.',
   ];
 
-  async function startLoader() {
-    forceTopScroll();
-    clearInitialHashScroll();
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+  let msgIdx = 0;
 
-    // Terminal Boot Sequence
-    let timeOffset = 0;
-    let activeCursor: HTMLSpanElement | null = null;
-    
-    bootLogs.forEach((log, index) => {
-      setTimeout(() => {
-        if (activeCursor) {
-          activeCursor.remove();
-        }
-        
-        if (termContent) {
-          const line = document.createElement('div');
-          line.className = 'term-line';
-          
-          let colorClass = log.type ? log.type : '';
-          
-          line.innerHTML = `<span class="term-prefix">~</span><span class="${colorClass}">${log.text}</span>`;
-          
-          // Add cursor to the last line
-          if (index < bootLogs.length - 1) {
-             const cursor = document.createElement('span');
-             cursor.className = 'term-cursor';
-             line.appendChild(cursor);
-             activeCursor = cursor;
-          }
-          
-          termContent.appendChild(line);
-          termContent.scrollTop = termContent.scrollHeight;
-          
-          // Status updates
-          if (index === 2 && sysStatus) {
-            sysStatus.textContent = 'BOOTING...';
-            sysStatus.style.color = '#ffbd2e';
-          }
-          if (index === 8 && sysStatus) {
-            sysStatus.textContent = 'ONLINE';
-            sysStatus.className = 'terminal-status online';
-          }
-        }
-      }, log.delay);
-    });
-
-    // Progress animation mapping to the 3.5s boot sequence
-    let progress_value = 0;
-    const progressInterval = setInterval(() => {
-      // Exponential-like progress
-      progress_value += (100 - progress_value) * 0.08 + Math.random() * 2;
-      
-      if (progress_value >= 100) {
-        progress_value = 100;
-        clearInterval(progressInterval);
-        if (msg) msg.textContent = "SYSTEM READY. ENTERING...";
-      }
-      
-      if (progress) progress.style.width = `${progress_value}%`;
-      if (percent) {
-        percent.textContent = `${Math.floor(progress_value)}%`;
-        percent.setAttribute('data-text', `${Math.floor(progress_value)}%`);
-      }
-    }, 50);
-
-    // Final unlock
-    setTimeout(() => {
-      forceTopScroll();
-      if (loader) loader.classList.add('is-hidden');
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalRootOverflow;
-      document.documentElement.style.scrollBehavior = originalScrollBehavior;
-    }, 4000);
+  function setProgress(pct: number) {
+    const offset = CIRCUMFERENCE * (1 - pct / 100);
+    if (prgFill) prgFill.style.strokeDashoffset = String(offset);
+    if (pctEl)   pctEl.textContent = Math.floor(pct) + '%';
   }
 
-  // Start when page is ready
+  const originalBodyOverflow = document.body.style.overflow;
+
+  function startLoader() {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.scrollTop = 0;
+
+    let progress = 0;
+    let msgTimer = 0;
+
+    const msgInterval = setInterval(() => {
+      msgIdx = (msgIdx + 1) % messages.length;
+      if (msgEl) msgEl.textContent = messages[msgIdx];
+    }, 650);
+
+    const progInterval = setInterval(() => {
+      progress += (100 - progress) * 0.07 + Math.random() * 1.5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(progInterval);
+        clearInterval(msgInterval);
+        if (msgEl) msgEl.textContent = 'ALL SYSTEMS ONLINE.';
+      }
+      setProgress(progress);
+    }, 50);
+
+    setTimeout(() => {
+      overlay?.classList.add('is-hidden');
+      document.body.style.overflow = originalBodyOverflow;
+    }, 3800);
+  }
+
   if (document.readyState === 'complete') {
     startLoader();
   } else {
