@@ -10,9 +10,11 @@ import collaction from "../assets/svg/collection-upload-svgrepo-com.svg";
 import presentation from "../assets/svg/presentation-6-svgrepo-com.svg";
 import reward from "../assets/svg/award-reward-svgrepo-com.svg";
 import ayush from "../assets/people/Ayush.jpeg";
-import rahidul from "../assets/people/Rahidul.png";
+import rahidul from "../assets/people/Rahidul.jpeg";
 import neel from "../assets/people/Neel.jpeg";
 import debankan from "../assets/people/Debankan.jpeg";
+import ronit from "../assets/people/ronit.png"
+import name from "../assets/images/name.png"
 
 const timeline = [
   {
@@ -24,8 +26,8 @@ const timeline = [
   },
   {
     title: "PPT Submission Starts",
-    date: "10 September",
-    isoDate: "2026-09-10",
+    date: "08 September",
+    isoDate: "2026-09-08",
     icon: collaction,
     desc: "Submit your presentation slides",
   },
@@ -38,8 +40,8 @@ const timeline = [
   },
   {
     title: "PPT Submission Ends",
-    date: "20 September",
-    isoDate: "2026-09-20",
+    date: "18 September",
+    isoDate: "2026-09-18",
     icon: collaction,
     desc: "Deadline for all submissions",
   },
@@ -112,7 +114,7 @@ const organizers = [
     github: "https://github.com/Ronit77777",
     linkedin: "https://www.linkedin.com/in/ronit-banerjee-2232b61a3/",
     role:"Organizer",
-    imageUrl: "",
+    imageUrl: ronit,
   },
   {
     name: "Debankan Dutta",
@@ -342,9 +344,7 @@ const eventStructuredData = {
                 </div>
 
                 <h1 class="hero-heading">
-                  <span class="hero-heading-code">CODE</span><span
-                    class="hero-heading-craft">CRAFT</span
-                  >
+                  <img src={name.src} alt="name">
                 </h1>
 
                 <p class="hero-tagline">Where Software Meets Hardware</p>
@@ -1054,7 +1054,7 @@ const eventStructuredData = {
             /* Info card */
             .tl-info-card {
               position: absolute;
-              width: 155px;
+              width: 200px;
               left: 50%;
               transform: translateX(-50%);
               opacity: 0;
@@ -1136,7 +1136,7 @@ const eventStructuredData = {
 
             .tl-card-date {
               font-family: var(--font-mono);
-              font-size: 0.58rem;
+              font-size: 0.88rem;
               color: rgba(0, 242, 254, 0.7);
               letter-spacing: 0.08em;
             }
