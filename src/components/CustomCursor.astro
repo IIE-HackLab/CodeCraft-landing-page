@@ -2,12 +2,13 @@
 ---
 <div class="cursor-container" aria-hidden="true">
   <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
+  <div id="cursor-ring">
+    <div id="cursor-label"></div>
+  </div>
   <div id="cursor-glow"></div>
 </div>
 
 <style is:global>
-  /* Hide default cursor only on devices that support hover */
   @media (hover: hover) and (pointer: fine) {
     * {
       cursor: none !important;
@@ -17,17 +18,16 @@
 
 <style>
   .cursor-container {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 99999;
   }
 
-  /* Show only on devices that support hover */
   @media (hover: hover) and (pointer: fine) {
     .cursor-container {
       display: block;
@@ -42,48 +42,58 @@
     background: #00f2fe;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
-    z-index: 10001;
+    transition: width 0.25s ease, height 0.25s ease, background 0.25s ease;
+    z-index: 100001;
+    pointer-events: none;
   }
 
   /* Adaptive Ring */
   #cursor-ring {
     position: fixed;
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid rgba(0, 242, 254, 0.4);
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid rgba(0, 242, 254, 0.45);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    /* Smooth LERP-like transition for the ring */
     transition: 
-      width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-      height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-      border-color 0.4s ease,
-      background 0.4s ease;
-    z-index: 10000;
+      width 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+      height 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+      border-color 0.3s ease,
+      background 0.3s ease,
+      border-radius 0.35s ease;
+    z-index: 100000;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Techy Crosshair Accents for Ring */
-  #cursor-ring::before, #cursor-ring::after {
-    content: '';
-    position: absolute;
-    background: #00f2fe;
+  /* Contextual Label */
+  #cursor-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #00f2fe;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transform: scale(0.8);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
   }
 
-  /* Background Ambient Glow */
+  /* Ambient Glow */
   #cursor-glow {
     position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.07) 0%, transparent 68%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    z-index: 0;
+    z-index: 99998;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
   }
 
   /* Hover States */
@@ -94,16 +104,33 @@
   }
 
   .cursor-hover #cursor-ring {
-    width: 50px;
-    height: 50px;
-    border-color: rgba(0, 242, 254, 0.8);
-    background: rgba(0, 242, 254, 0.05);
+    width: 48px;
+    height: 48px;
+    border-color: rgba(0, 242, 254, 0.85);
+    background: rgba(0, 242, 254, 0.06);
+    box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+  }
+
+  /* Labeled Hover State */
+  .cursor-labeled #cursor-dot {
+    opacity: 0;
+  }
+  .cursor-labeled #cursor-ring {
+    width: 76px;
+    height: 32px;
+    border-radius: 4px;
+    border-color: #00f2fe;
+    background: rgba(4, 12, 26, 0.88);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.35);
+  }
+  .cursor-labeled #cursor-label {
+    opacity: 1;
+    transform: scale(1);
   }
 
   /* Click State */
   .cursor-active #cursor-ring {
-    width: 25px;
-    height: 25px;
+    transform: translate(-50%, -50%) scale(0.85);
     background: rgba(0, 242, 254, 0.2);
     border-color: #00f2fe;
   }
@@ -113,27 +140,25 @@
   const dot = document.getElementById("cursor-dot");
   const ring = document.getElementById("cursor-ring");
   const glow = document.getElementById("cursor-glow");
+  const label = document.getElementById("cursor-label");
   const container = document.querySelector(".cursor-container");
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let ringX = 0;
-  let ringY = 0;
+  let mouseX = -100;
+  let mouseY = -100;
+  let ringX = -100;
+  let ringY = -100;
 
-  // Smoothing factor for the ring (0.1 = slow/liquid, 1.0 = instant)
-  const lerpFactor = 0.15;
+  const lerpFactor = 0.18;
 
   document.addEventListener("pointermove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     
-    // Dot is instant
     if (dot) {
       dot.style.left = mouseX + "px";
       dot.style.top = mouseY + "px";
     }
 
-    // Glow is instant
     if (glow) {
       glow.style.left = mouseX + "px";
       glow.style.top = mouseY + "px";
@@ -141,9 +166,7 @@
     }
   });
 
-  // Smooth animation loop for the ring
   function animate() {
-    // Linear Interpolation: ring position moves towards mouse position
     ringX += (mouseX - ringX) * lerpFactor;
     ringY += (mouseY - ringY) * lerpFactor;
 
@@ -156,28 +179,73 @@
   }
   animate();
 
-  // Interaction Listeners
   document.addEventListener("mousedown", () => container?.classList.add("cursor-active"));
   document.addEventListener("mouseup", () => container?.classList.remove("cursor-active"));
 
-  // Detect hover on interactable elements
-  const updateHoverState = (isHovering) => {
-    if (isHovering) container?.classList.add("cursor-hover");
-    else container?.classList.remove("cursor-hover");
-  };
-
-  // We use event delegation for better performance
   document.addEventListener("mouseover", (e) => {
     const target = e.target;
-    if (target.closest('a, button, [role="button"], input, textarea, .fcard, .podium-card, .org-card')) {
-      updateHoverState(true);
+    if (!target) return;
+
+    // Check custom explicit label first
+    const labelEl = target.closest('[data-cursor]');
+    if (labelEl && label) {
+      const customText = labelEl.getAttribute('data-cursor');
+      label.textContent = customText;
+      container?.classList.add('cursor-labeled');
+      container?.classList.remove('cursor-hover');
+      return;
+    }
+
+    // Contextual detection for key elements
+    const ctaBtn = target.closest('#hero-register-btn, .btn-primary, .nav-cta');
+    if (ctaBtn && label) {
+      label.textContent = '[ENTER]';
+      container?.classList.add('cursor-labeled');
+      return;
+    }
+
+    const wbItem = target.closest('.code-panel, .core-assembly, .hardware-module');
+    if (wbItem && label) {
+      if (wbItem.classList.contains('code-panel')) label.textContent = '[CODE]';
+      else if (wbItem.classList.contains('core-assembly')) label.textContent = '[CORE]';
+      else if (wbItem.classList.contains('hardware-module')) label.textContent = '[CIRCUIT]';
+      container?.classList.add('cursor-labeled');
+      return;
+    }
+
+    const roadCard = target.closest('.road-event-card, .road-cp');
+    if (roadCard && label) {
+      label.textContent = '[CHECKPOINT]';
+      container?.classList.add('cursor-labeled');
+      return;
+    }
+
+    const orgCard = target.closest('.org-card');
+    if (orgCard && label) {
+      label.textContent = '[PROFILE]';
+      container?.classList.add('cursor-labeled');
+      return;
+    }
+
+    const protoRule = target.closest('.proto-rule, .protocol-item');
+    if (protoRule && label) {
+      label.textContent = '[PROTOCOL]';
+      container?.classList.add('cursor-labeled');
+      return;
+    }
+
+    // Generic interactive element
+    if (target.closest('a, button, [role="button"], input, textarea, .core-module, .bounty-card, .comm-link')) {
+      container?.classList.remove('cursor-labeled');
+      container?.classList.add('cursor-hover');
     }
   });
 
   document.addEventListener("mouseout", (e) => {
     const target = e.target;
-    if (target.closest('a, button, [role="button"], input, textarea, .fcard, .podium-card, .org-card')) {
-      updateHoverState(false);
+    if (target.closest('a, button, [role="button"], input, textarea, [data-cursor], .core-module, .bounty-card, .org-card, .road-event-card, .road-cp, .comm-link')) {
+      container?.classList.remove('cursor-hover');
+      container?.classList.remove('cursor-labeled');
     }
   });
 
