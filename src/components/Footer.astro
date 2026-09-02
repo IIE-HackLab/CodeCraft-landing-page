@@ -33,11 +33,12 @@ import logoImg from "../assets/images/logo-high.png";
       <h3 class="cf-header"><span class="cf-slash">//</span> ROOT_DIRECTORY</h3>
       <nav class="cf-nav" aria-label="Footer navigation">
         <a href="#about" class="cf-link"><span class="cf-index">01</span> ABOUT_MODULE</a>
-        <a href="#prizes" class="cf-link"><span class="cf-index">02</span> BOUNTY_BOARD</a>
-        <a href="#timeline" class="cf-link"><span class="cf-index">03</span> EXECUTION_PIPELINE</a>
-        <a href="#rules" class="cf-link"><span class="cf-index">04</span> SYSTEM_PROTOCOLS</a>
-        <a href="#submission" class="cf-link"><span class="cf-index">05</span> UPLOAD_PAYLOADS</a>
-        <a href="#organizers" class="cf-link"><span class="cf-index">06</span> NETWORK_ADMINS</a>
+        <a href="#themes" class="cf-link"><span class="cf-index">02</span> THEME_TRACKS</a>
+        <a href="#prizes" class="cf-link"><span class="cf-index">03</span> BOUNTY_BOARD</a>
+        <a href="#timeline" class="cf-link"><span class="cf-index">04</span> EXECUTION_PIPELINE</a>
+        <a href="#rules" class="cf-link"><span class="cf-index">05</span> SYSTEM_PROTOCOLS</a>
+        <a href="#submission" class="cf-link"><span class="cf-index">06</span> UPLOAD_PAYLOADS</a>
+        <a href="#organizers" class="cf-link"><span class="cf-index">07</span> NETWORK_ADMINS</a>
       </nav>
     </div>
 
@@ -46,13 +47,17 @@ import logoImg from "../assets/images/logo-high.png";
       <div class="cf-terminal">
         <div class="cft-head">
           <div class="cft-dots"><i></i><i></i><i></i></div>
-          <span>root@codecraft:~</span>
+          <span>terminal // shutdown_protocol</span>
         </div>
         <div class="cft-body">
-          <p>> status --check</p>
-          <p class="cft-success">ALL_SYSTEMS_OPERATIONAL</p>
-          <p>> await new_registration()</p>
-          <p class="cft-blink">_</p>
+          <p class="cft-dim">> CODECRAFT SYSTEM</p>
+          <p class="cft-success">STATUS: COMPLETE</p>
+          <p class="cft-msg">Thanks for entering the system.</p>
+          <div class="cft-cta-wrap">
+            <a href="/coming-soon" class="cft-cta-btn">[ REGISTER / ENTER CODECRAFT ]</a>
+          </div>
+          <p class="cft-term">> CONNECTION TERMINATED.</p>
+          <span class="cft-blink">_</span>
         </div>
       </div>
     </div>
@@ -291,8 +296,29 @@ import logoImg from "../assets/images/logo-high.png";
   }
 
   .cft-body p { margin: 0 0 0.25rem 0; }
-  .cft-success { color: #4ade80; text-shadow: 0 0 5px rgba(74, 222, 128, 0.4); padding-left: 1rem; margin-bottom: 0.5rem !important; }
-  .cft-blink { display:inline-block; width:6px; height:10px; background:#fff; animation: blink 1s infinite alternate; }
+  .cft-dim { color: #94a3b8; }
+  .cft-success { color: #4ade80; text-shadow: 0 0 5px rgba(74, 222, 128, 0.4); font-weight: bold; margin-bottom: 0.35rem !important; }
+  .cft-msg { color: #cbd5e1; font-size: 0.68rem; margin-bottom: 0.75rem !important; }
+  .cft-cta-wrap { margin: 0.6rem 0; }
+  .cft-cta-btn {
+    display: inline-block;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.65rem;
+    color: #00f2fe;
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    background: rgba(0, 242, 254, 0.08);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .cft-cta-btn:hover {
+    background: rgba(0, 242, 254, 0.2);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+    color: #fff;
+  }
+  .cft-term { color: #f43f5e; font-size: 0.62rem; margin-top: 0.5rem !important; letter-spacing: 0.1em; }
+  .cft-blink { display:inline-block; width:6px; height:10px; background:#00f2fe; animation: blink 1s infinite alternate; }
 
   @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0; } }
 

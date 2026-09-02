@@ -37,6 +37,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     <!-- Desktop nav links -->
     <nav class="nav-links" aria-label="Sections" id="nav-links-desktop">
       <a href={isComingSoon ? "/#about" : "#about"} class="nav-link" id="nl-about">About</a>
+      <a href={isComingSoon ? "/#themes" : "#themes"} class="nav-link" id="nl-themes">Themes</a>
       <a href={isComingSoon ? "/#prizes" : "#prizes"} class="nav-link" id="nl-prizes">Prizes</a>
       <a href={isComingSoon ? "/#timeline" : "#timeline"} class="nav-link" id="nl-timeline">Timeline</a>
       <a href={isComingSoon ? "/#rules" : "#rules"} class="nav-link" id="nl-rules">Rules</a>
@@ -191,12 +192,29 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#prizes" : "#prizes"}
+          href={isComingSoon ? "/#themes" : "#themes"}
           class="mob-nav-item nav-mobile-link"
-          id="ml-prizes"
+          id="ml-themes"
           style="--i:1"
         >
           <span class="mob-idx">02</span>
+          <span class="mob-label">Themes</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href={isComingSoon ? "/#prizes" : "#prizes"}
+          class="mob-nav-item nav-mobile-link"
+          id="ml-prizes"
+          style="--i:2"
+        >
+          <span class="mob-idx">03</span>
           <span class="mob-label">Prizes</span>
           <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
             ><path
@@ -1057,6 +1075,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     const sections = [
       "home",
       "about",
+      "themes",
       "prizes",
       "timeline",
       "rules",
