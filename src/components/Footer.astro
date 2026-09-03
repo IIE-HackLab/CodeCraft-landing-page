@@ -1,5 +1,7 @@
 ---
 import logoImg from "../assets/images/logo-high.png";
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="cyber-footer" id="footer">
@@ -62,7 +64,7 @@ import logoImg from "../assets/images/logo-high.png";
   <div class="cf-bottom">
     <div class="cf-bottom-inner" aria-hidden="true">
       <div class="cf-status-bar">
-        <span>SYS_LOG: <script is:inline>document.write(new Date().getFullYear())</script>.09.21</span>
+        <span>SYS_LOG: {currentYear}.09.21</span>
         <span>COPYRIGHT_IIE_HACKLAB</span>
         <span>ALL_RIGHTS_RESERVED</span>
       </div>

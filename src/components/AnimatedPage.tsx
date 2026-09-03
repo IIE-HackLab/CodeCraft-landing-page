@@ -1976,6 +1976,26 @@ function RoadTimeline({ timelineStops }: { timelineStops: TimelineItem[] }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const revealElements = sectionRef.current
+      ? Array.from(
+          sectionRef.current.querySelectorAll<HTMLElement>(
+            ".reveal, .reveal-stagger",
+          ),
+        )
+      : [];
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    revealElements.forEach((element) => revealObserver.observe(element));
+
     const TL_EVENTS = timelineStops.map(({ title, isoDate }) => ({
       title,
       date: `${isoDate}T00:00:00+05:30`,
@@ -2436,6 +2456,7 @@ function RoadTimeline({ timelineStops }: { timelineStops: TimelineItem[] }) {
       cancelAnimationFrame(rafId);
       clearInterval(intervalId);
       window.removeEventListener("resize", handleResize);
+      revealObserver.disconnect();
     };
   }, []);
 
