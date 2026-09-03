@@ -1,10 +1,15 @@
 # 🌐 CodeCraft Landing Page
 
-# CodeCraft Landing Page
+![Astro](https://img.shields.io/badge/Astro-5.0-FF5D01?style=for-the-badge&logo=astro)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript)
+![PostCSS](https://img.shields.io/badge/PostCSS-8.4-DD3A0A?style=for-the-badge&logo=postcss)
 
-The public landing page for the IIE Tech Club's CODECRAFT 2026 hackathon. It is built as a static Astro site with an interactive React page island, shared CSS, and responsive navigation.
+The **CodeCraft Landing Page** is the public face of the IIE HackLab's hackathon. It features a high-impact, neon-futuristic UI designed to captivate potential participants, showcase event details, and drive registrations.
 
-## Stack
+---
+
+## 🛠️ Tech Stack
 
 - Astro 7 with static output
 - React 19 and Framer Motion for interactive sections

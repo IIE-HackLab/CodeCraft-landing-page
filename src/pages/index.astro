@@ -7,7 +7,7 @@ import AnimatedPage from "../components/AnimatedPage.tsx";
 import logoImg from "../assets/images/logo-high.png";
 import "../styles/global.css";
 import ayush from "../assets/people/Ayush.jpeg";
-import rahidul from "../assets/people/Rahidul.png";
+import rahidul from "../assets/people/Rahidul.jpeg";
 import neel from "../assets/people/Neel.jpeg";
 import debankan from "../assets/people/Debankan.jpeg";
 import ronit from "../assets/people/ronit.png";
@@ -85,6 +85,37 @@ const features = [
   { icon: "🚀", num: "03", title: "Real Impact",         desc: "Cross-year teams (1st–4th year) working on projects that matter." },
 ];
 
+const siteUrl = "https://iie-code-craft.vercel.app";
+const pageTitle = "CODECRAFT 2026 | Hackathon by IIE HackLab";
+const pageDescription =
+  "Register for CODECRAFT 2026, the IIE HackLab hackathon at Ideal Institute of Engineering where student teams build software and hardware prototypes with live demos, prizes, and certificates.";
+const pageKeywords =
+  "CODECRAFT, CODECRAFT 2026, IIE HackLab, Ideal Institute of Engineering hackathon, hardware hackathon, software hardware project competition, student hackathon, software hackathon";
+const socialImage = `${siteUrl}/CodeCraft.png`;
+
+const eventStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: "CODECRAFT 2026",
+  description: pageDescription,
+  url: siteUrl,
+  image: [socialImage],
+  startDate: "2026-08-20T09:00:00+05:30",
+  endDate: "2026-09-25T18:00:00+05:30",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  eventStatus: "https://schema.org/EventScheduled",
+  keywords: pageKeywords,
+  location: {
+    "@type": "Place",
+    name: "Ideal Institute of Engineering",
+    address: "Ideal Institute of Engineering campus",
+  },
+  organizer: {
+    "@type": "Organization",
+    name: "IIE HackLab",
+    url: siteUrl,
+  },
+};
 ---
 
 <html lang="en">
@@ -93,7 +124,7 @@ const features = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={pageDescription} />
     <meta name="keywords" content={pageKeywords} />
-    <meta name="author" content="IIE Tech Club" />
+    <meta name="author" content="IIE HackLab" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#020811" />
     <meta name="format-detection" content="telephone=yes" />
@@ -169,6 +200,484 @@ const features = [
         }, { threshold: 0.15 });
         document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealIo.observe(el));
       })();
+
+      // ── Counter animation
+      const animateCount = (node) => {
+        const target = +node.dataset.counter || 0;
+        const suffix = node.dataset.suffix || "";
+        const dur = 1400,
+          start = performance.now();
+        const tick = (now) => {
+          const p = Math.min((now - start) / dur, 1);
+          node.textContent =
+            Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const co = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              animateCount(en.target);
+              co.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+      document
+        .querySelectorAll("[data-counter]")
+        .forEach((el) => co.observe(el));
+
+      // ── Countdown to event (21 Sep 2026)
+      const target = new Date("2026-09-21T09:00:00");
+      const pad = (n) => String(n).padStart(2, "0");
+      const updateCD = () => {
+        const diff = target - Date.now();
+        if (diff <= 0) {
+          document.getElementById("countdown")?.remove();
+          return;
+        }
+        const s = Math.floor(diff / 1000);
+        const elDays = document.getElementById("cd-days");
+        const elHours = document.getElementById("cd-hours");
+        const elMins = document.getElementById("cd-mins");
+        const elSecs = document.getElementById("cd-secs");
+        
+        if (elDays) elDays.textContent = pad(Math.floor(s / 86400));
+        if (elHours) elHours.textContent = pad(Math.floor((s % 86400) / 3600));
+        if (elMins) elMins.textContent = pad(Math.floor((s % 3600) / 60));
+        if (elSecs) elSecs.textContent = pad(s % 60);
+      };
+      updateCD();
+      setInterval(updateCD, 1000);
+
+      // ── 3D Tilt Effect
+      document.querySelectorAll('[data-tilt]').forEach(el => {
+        // Only apply on desktop
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+        
+        el.addEventListener('mousemove', e => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+          
+          el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          el.style.transition = 'transform 0.1s ease';
+          
+          // Dynamic shine effect
+          if(!el.querySelector('.tilt-shine')) {
+            const shine = document.createElement('div');
+            shine.className = 'tilt-shine';
+            shine.style.position = 'absolute';
+            shine.style.inset = '0';
+            shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.15) 0%, transparent 60%)';
+            shine.style.pointerEvents = 'none';
+            shine.style.zIndex = '10';
+            shine.style.opacity = '0';
+            shine.style.transition = 'opacity 0.3s';
+            shine.style.borderRadius = 'inherit';
+            
+            // Check if element is relatively positioned
+            const style = window.getComputedStyle(el);
+            if (style.position === 'static') {
+              el.style.position = 'relative';
+            }
+            
+            el.appendChild(shine);
+          }
+          
+          const shine = el.querySelector('.tilt-shine');
+          if(shine) {
+            shine.style.opacity = '1';
+            shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 242, 254, 0.2) 0%, transparent 60%)`;
+          }
+        });
+        
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = '';
+          el.style.transition = 'transform 0.5s ease';
+          const shine = el.querySelector('.tilt-shine');
+          if(shine) shine.style.opacity = '0';
+        });
+      });
+
+      // ── Magnetic Buttons
+      document.querySelectorAll('[data-magnetic]').forEach(btn => {
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+        
+        btn.addEventListener('mousemove', e => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0px, 0px)';
+        });
+      });
+
+      // ── Scramble Text Effect on Scroll (for Headings)
+      const scrambleObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const heading = entry.target;
+            heading.classList.add('glitch-active');
+            let iterations = 0;
+            const originalText = heading.getAttribute('data-text') || heading.innerText;
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+            
+            clearInterval(heading.glitchInterval);
+            heading.glitchInterval = setInterval(() => {
+              heading.innerText = originalText.split("").map((letter, index) => {
+                if(index < iterations) return originalText[index];
+                if(letter === " " || letter === "\n") return letter; // preserve spaces and line breaks
+                return letters[Math.floor(Math.random() * letters.length)];
+              }).join("");
+              
+              if(iterations >= originalText.length){
+                clearInterval(heading.glitchInterval);
+                heading.innerText = originalText;
+                heading.classList.remove('glitch-active');
+              }
+              iterations += 1 / 3; // speed of unscrambling
+            }, 30);
+            
+            observer.unobserve(heading);
+          }
+        });
+      }, { threshold: 0.8 }); // Trigger when 80% visible
+      
+      document.querySelectorAll('.section-title:not([data-no-scramble]), .hero-heading-craft').forEach(heading => {
+        heading.setAttribute('data-text', heading.innerText);
+        // Pre-scramble text so it's fully scrambled before scrolling into view
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+        heading.innerText = heading.innerText.split("").map(char => 
+          (char === " " || char === "\n") ? char : letters[Math.floor(Math.random() * letters.length)]
+        ).join(""); 
+        scrambleObserver.observe(heading);
+      });
+      
+      // ── Typewriter effect for terminal commands
+      let terminalTimeouts = [];
+      const typeTerminal = () => {
+         const termHistory = document.getElementById('term-history');
+         const termLines = termHistory ? termHistory.querySelectorAll('.t-line') : [];
+         const termInput = document.getElementById('term-input');
+         const activePrompt = document.querySelector('.active-prompt');
+         
+         if(termLines.length > 0) {
+            if (activePrompt) activePrompt.style.opacity = '0';
+            
+            terminalTimeouts.forEach(clearTimeout);
+            terminalTimeouts = [];
+            
+            termLines.forEach(line => {
+              line.style.opacity = '0';
+              line.style.animation = 'none';
+            });
+            
+            void termLines[0].offsetWidth;
+
+            let delay = 0;
+            termLines.forEach((line, index) => {
+               const tid = setTimeout(() => {
+                  line.style.opacity = '1';
+                  line.style.animation = 'line-appear 0.2s forwards';
+                  
+                  // When last line is typed, show the input prompt
+                  if (index === termLines.length - 1) {
+                    setTimeout(() => {
+                      if (activePrompt) activePrompt.style.opacity = '1';
+                      if (termInput) termInput.focus();
+                    }, 500);
+                  }
+               }, delay);
+               terminalTimeouts.push(tid);
+               delay += 600;
+            });
+         }
+      };
+
+      // ── Interactive Terminal Input Handling
+      const termInput = document.getElementById('term-input');
+      const termHistory = document.getElementById('term-history');
+      const termBody = document.getElementById('term-body');
+
+      const addLine = (text, isCommand = false, isError = false) => {
+        const line = document.createElement('div');
+        line.className = isCommand ? 't-line' : 't-line command-output';
+        if (isError) line.style.color = '#ff2a00';
+        
+        if (isCommand) {
+          line.innerHTML = `<span class="t-prompt">root@codecraft:~#</span> ${text}`;
+        } else {
+          line.innerText = text;
+        }
+        
+        termHistory.appendChild(line);
+        if (termBody) termBody.scrollTop = termBody.scrollHeight;
+      };
+
+      const commands = {
+        help: () => {
+          const helpData = [
+            { cmd: 'help', desc: 'Display all available system protocols.' },
+            { cmd: 'about', desc: 'Learn about the CODECRAFT mission and vision.' },
+            { cmd: 'status', desc: 'Check real-time hardware vitals and sync state.' },
+            { cmd: 'register', desc: 'Initiate secure uplink to the participant portal.' },
+            { cmd: 'overclock', desc: 'Toggle performance bypass (WARNING: Thermal Risk).' },
+            { cmd: 'ls', desc: 'List active system configuration files.' },
+            { cmd: 'whoami', desc: 'Display current user credentials and access level.' },
+            { cmd: 'hack', desc: 'Attempt unauthorized firewall penetration.' },
+            { cmd: 'clear', desc: 'Purge terminal history and reset buffer.' }
+          ];
+
+          addLine("ACCESSING CORE COMMAND DIRECTORY...", false);
+          helpData.forEach((item, i) => {
+            setTimeout(() => {
+              addLine(`${item.cmd.padEnd(12)} - ${item.desc}`, false);
+            }, (i + 1) * 150);
+          });
+          return null;
+        },
+        clear: () => {
+          termHistory.innerHTML = '';
+          return null;
+        },
+        ls: () => "init_hardware.sh  execute_hackathon.exe  secrets.txt  neural_link.bin",
+        whoami: () => "GUEST_USER // UNAUTHORIZED // ACCESS_LEVEL: 0",
+        about: () => "CODECRAFT 2026: Where Software Meets Hardware. Bridge the gap between virtual logic and physical circuits.",
+        status: () => isOverclocked ? "SYSTEM_STATE: OVERCLOCKED // CRITICAL_HEAT // BYPASS_ACTIVE" : "SYSTEM_STATE: OPTIMAL // SYNC_STABLE",
+        register: () => {
+          addLine("INITIATING SECURE UPLINK TO REGISTRATION_SERVER...", false);
+          setTimeout(() => addLine("Handshake established... [ENCRYPTED]", false), 400);
+          setTimeout(() => addLine("Redirecting to participant dashboard...", false), 800);
+          setTimeout(() => {
+            window.open('https://participant-dashboard.vercel.app', '_blank');
+          }, 1200);
+          return "UPLINK_SUCCESSFUL. OPENING PORTAL...";
+        },
+        hack: () => {
+          addLine("INITIATING BRUTE-FORCE PROTOCOL...", false);
+          setTimeout(() => addLine("Searching for vulnerability... [FOUND]", false), 500);
+          setTimeout(() => addLine("Injecting SQLi payloads into core db...", false), 1200);
+          setTimeout(() => addLine("Decrypting admin_shadow... [####------] 42%", false), 1800);
+          setTimeout(() => {
+            addLine("CRITICAL ERROR: INTRUSION DETECTED", false, true);
+            addLine("UPLINK TRACED TO LOCAL NODE", false, true);
+            addLine("ALERT: AUTHORITIES NOTIFIED", false, true);
+            addLine("INITIATING SYSTEM LOCKDOWN...", false, true);
+            const term = document.getElementById('interactive-terminal');
+            if (term) {
+              term.classList.add('term-shake');
+              setTimeout(() => term.classList.remove('term-shake'), 400);
+            }
+          }, 2800);
+          return "PROTOCOL_0: ACCESS_REJECTED_BY_FIREWALL";
+        },
+        overclock: () => {
+          const mcu = document.getElementById('interactive-mcu');
+          const shell = document.getElementById('page-shell');
+          if (mcu) mcu.click();
+          
+          if (!isOverclocked) {
+             // We are about to be overclocked because click() toggles it
+             addLine("BYPASSING HARDWARE SAFETY LIMITS...", false, true);
+             setTimeout(() => addLine("Voltages increased: 1.2V -> 1.85V [CRITICAL]", false, true), 400);
+             setTimeout(() => addLine("Fan RPM: 100% [INSUFFICIENT_COOLING]", false, true), 800);
+             setTimeout(() => addLine("WARNING: CORE_TEMP @ 108°C", false, true), 1200);
+             shell?.classList.add('critical-state');
+             return "SYSTEM OVERCLOCKED. PERFORMANCE PEAKED. STABILITY: 12%";
+          } else {
+             shell?.classList.remove('critical-state');
+             return "Overclock sequence TERMINATED. Cooling initiated.";
+          }
+        }
+      };
+
+      if (termInput) {
+        termInput.addEventListener('input', () => {
+          // Dynamic width adjustment
+          termInput.style.width = (termInput.value.length + 1) + "ch";
+        });
+
+        termInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const input = termInput.value.trim().toLowerCase();
+            if (input) {
+              addLine(termInput.value, true);
+              
+              if (commands[input]) {
+                const output = commands[input]();
+                if (output) addLine(output);
+              } else {
+                addLine(`Command not found: ${input}. Type 'help' for available commands.`, false, true);
+              }
+            }
+            termInput.value = '';
+            termInput.style.width = '2px';
+          }
+        });
+
+        // Focus input whenever terminal is clicked
+        const termContainer = document.getElementById('interactive-terminal');
+        if (termContainer) {
+          termContainer.addEventListener('click', () => termInput.focus());
+        }
+
+        // ── Resize Logic ──
+        if (termContainer) {
+          const resizers = termContainer.querySelectorAll('.resizer-h');
+          let isResizing = false;
+
+          resizers.forEach(resizer => {
+            resizer.addEventListener('mousedown', (e) => {
+              isResizing = true;
+              const direction = resizer.getAttribute('data-direction');
+              const startX = e.clientX;
+              const startY = e.clientY;
+              const startWidth = termContainer.offsetWidth;
+              const startHeight = termContainer.offsetHeight;
+              const startLeft = termContainer.offsetLeft;
+              const startTop = termContainer.offsetTop;
+
+              const onMouseMove = (moveEvent) => {
+                if (!isResizing) return;
+
+                if (direction === 'r') {
+                  termContainer.style.width = startWidth + (moveEvent.clientX - startX) + 'px';
+                } else if (direction === 'b') {
+                  termContainer.style.height = startHeight + (moveEvent.clientY - startY) + 'px';
+                } else if (direction === 'l') {
+                  const newWidth = startWidth - (moveEvent.clientX - startX);
+                  if (newWidth > 280) {
+                    termContainer.style.width = newWidth + 'px';
+                    termContainer.style.left = startLeft + (moveEvent.clientX - startX) + 'px';
+                  }
+                } else if (direction === 't') {
+                  const newHeight = startHeight - (moveEvent.clientY - startY);
+                  if (newHeight > 200) {
+                    termContainer.style.height = newHeight + 'px';
+                    termContainer.style.top = startTop + (moveEvent.clientY - startY) + 'px';
+                  }
+                }
+              };
+
+              const onMouseUp = () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+              };
+
+              document.addEventListener('mousemove', onMouseMove);
+              document.addEventListener('mouseup', onMouseUp);
+              e.preventDefault();
+            });
+          });
+        }
+      }      
+      const termObserver = new IntersectionObserver((entries) => {
+         if(entries[0].isIntersecting) {
+            typeTerminal();
+            termObserver.disconnect();
+         }
+      });
+      const terminalElement = document.querySelector('.glass-terminal');
+      if(terminalElement) termObserver.observe(terminalElement);
+
+      // Terminal Interactive Reboot
+      const termRebootBtn = document.getElementById('term-reboot-btn');
+      if(termRebootBtn) {
+        termRebootBtn.addEventListener('click', () => {
+          typeTerminal(); // Re-run typing animation
+        });
+      }
+
+      // Interactive MCU Overclocking & Live HUD
+      let isOverclocked = false;
+      const mcuBoard = document.getElementById('interactive-mcu');
+      const latNode = document.querySelector('.hud-bl .hud-val');
+      const stateNode = document.querySelector('.hud-tr .hud-val');
+      let hudInterval;
+
+      const updateHud = () => {
+        if (!latNode) return;
+        
+        if (isOverclocked) {
+          // Overclocked HUD logic
+          latNode.innerText = `${Math.floor(Math.random() * 4 + 1)}ms`; // 1-4ms latency
+          latNode.style.color = "#ff2a00";
+          latNode.style.textShadow = "0 0 10px #ff2a00";
+          
+          if (stateNode) {
+            stateNode.innerText = "OVERCLOCKED";
+            stateNode.style.color = "#ff2a00";
+            stateNode.style.textShadow = "0 0 15px #ff2a00";
+          }
+        } else {
+          // Normal HUD logic
+          latNode.innerText = `${Math.floor(Math.random() * 20 + 8)}ms`;
+          latNode.style.color = "#00f2fe";
+          latNode.style.textShadow = "0 0 10px #00f2fe";
+          
+          if(stateNode && Math.random() > 0.8) {
+            stateNode.innerText = "SYNCING";
+            stateNode.style.color = "#ffbd2e";
+            stateNode.style.textShadow = "0 0 10px #ffbd2e";
+            setTimeout(() => {
+              if(!isOverclocked) { // Prevent overriding overclock state
+                stateNode.innerText = "OPTIMAL";
+                stateNode.style.color = "#00f2fe";
+                stateNode.style.textShadow = "0 0 10px #00f2fe";
+              }
+            }, 800);
+          }
+        }
+      };
+
+      // Initial HUD setup
+      hudInterval = setInterval(updateHud, 2000);
+
+      if (mcuBoard) {
+        mcuBoard.addEventListener('click', () => {
+          isOverclocked = !isOverclocked;
+          
+          if (isOverclocked) {
+            mcuBoard.classList.add('overclocked');
+            clearInterval(hudInterval);
+            hudInterval = setInterval(updateHud, 150); // Hyper-fast HUD updates
+            updateHud();
+          } else {
+            mcuBoard.classList.remove('overclocked');
+            clearInterval(hudInterval);
+            hudInterval = setInterval(updateHud, 2000); // Back to normal speed
+            
+            // Reset state node manually
+            if (stateNode) {
+              stateNode.innerText = "OPTIMAL";
+              stateNode.style.color = "#00f2fe";
+              stateNode.style.textShadow = "0 0 10px #00f2fe";
+            }
+            updateHud();
+          }
+        });
+      }
+      
+      // ── Ambient background mouse follow
+      document.addEventListener('mousemove', (e) => {
+        const bgOrbs = document.querySelector('.ambient-bg');
+        if (bgOrbs) {
+          const x = e.clientX / window.innerWidth;
+          const y = e.clientY / window.innerHeight;
+          bgOrbs.style.transform = `translate(${x * -20}px, ${y * -20}px)`;
+        }
+      });
 
     </script>
   </body>
