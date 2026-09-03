@@ -1,11 +1,12 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 
-import react from '@astrojs/react';
-
-// https://astro.build/config
 export default defineConfig({
-  site: 'https://code-craft-landing-page-alpha.vercel.app',
-  integrations: [tailwind(), react()],
+  site: "https://codecraft2k26.vercel.app",
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

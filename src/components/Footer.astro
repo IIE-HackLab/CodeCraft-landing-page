@@ -32,12 +32,12 @@ import logoImg from "../assets/images/logo-high.png";
     <div class="cf-block cf-dir">
       <h3 class="cf-header"><span class="cf-slash">//</span> ROOT_DIRECTORY</h3>
       <nav class="cf-nav" aria-label="Footer navigation">
-        <a href="#about" class="cf-link"><span class="cf-index">01</span> ABOUT_MODULE</a>
-        <a href="#prizes" class="cf-link"><span class="cf-index">02</span> BOUNTY_BOARD</a>
-        <a href="#timeline" class="cf-link"><span class="cf-index">03</span> EXECUTION_PIPELINE</a>
-        <a href="#rules" class="cf-link"><span class="cf-index">04</span> SYSTEM_PROTOCOLS</a>
-        <a href="#submission" class="cf-link"><span class="cf-index">05</span> UPLOAD_PAYLOADS</a>
-        <a href="#organizers" class="cf-link"><span class="cf-index">06</span> NETWORK_ADMINS</a>
+        <a href="#about" class="cf-link"><span class="cf-index">01</span> ABOUT</a>
+        <a href="#prizes" class="cf-link"><span class="cf-index">02</span> PRIZES</a>
+        <a href="#timeline" class="cf-link"><span class="cf-index">03</span> TIMELINE</a>
+        <a href="#rules" class="cf-link"><span class="cf-index">04</span> RULES</a>
+        <a href="#submission" class="cf-link"><span class="cf-index">05</span> SUBMISSION</a>
+        <a href="#organizers" class="cf-link"><span class="cf-index">06</span> TEAM</a>
       </nav>
     </div>
 
@@ -79,7 +79,8 @@ import logoImg from "../assets/images/logo-high.png";
   <div class="cf-bottom">
     <div class="cf-bottom-inner" aria-hidden="true">
       <div class="cf-status-bar">
-        <span>SYS_LOG: <script is:inline>document.write(new Date().getFullYear())</script>.09.21</span>
+        <span>SYS_LOG: {new Date().getFullYear()}.09.21</span>
+        <span>ENGINEERED_BY: <a href="https://github.com/AR128" target="_blank" rel="noreferrer" class="cf-credit-link">Ayush Choudhary</a></span>
         <span>COPYRIGHT_IIE_TECH_CLUB</span>
         <span>ALL_RIGHTS_RESERVED</span>
       </div>
@@ -188,7 +189,7 @@ import logoImg from "../assets/images/logo-high.png";
   .cf-desc {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: #8b99af;
+    color: #cbd5e1;
     line-height: 1.8;
     margin-bottom: 1.5rem;
   }
@@ -218,7 +219,7 @@ import logoImg from "../assets/images/logo-high.png";
   .cf-link {
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: #8b99af;
+    color: #cbd5e1;
     text-decoration: none;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -298,7 +299,7 @@ import logoImg from "../assets/images/logo-high.png";
   .cft-dots i:nth-child(2) { background: #eab308; }
   .cft-dots i:nth-child(3) { background: #22c55e; }
 
-  .cft-head span { font-size: 0.65rem; color: #64748b; }
+  .cft-head span { font-size: 0.65rem; color: #cbd5e1; }
 
   .cft-body {
     padding: 1rem;
@@ -335,7 +336,7 @@ import logoImg from "../assets/images/logo-high.png";
     gap: 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.6rem;
-    color: #64748b;
+    color: #cbd5e1;
     letter-spacing: 0.1em;
   }
 
@@ -346,6 +347,17 @@ import logoImg from "../assets/images/logo-high.png";
     font-size: 0.6rem;
     color: rgba(0, 242, 254, 0.5);
     letter-spacing: 0.1em;
+  }
+
+  .cf-credit-link {
+    color: rgba(0, 242, 254, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .cf-credit-link:hover {
+    color: var(--c-cyan);
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
   }
 
   /* Responsive */
@@ -365,7 +377,7 @@ import logoImg from "../assets/images/logo-high.png";
 
   @media (hover: none), (pointer: coarse) {
     .cf-link:hover {
-      color: #8b99af;
+      color: #cbd5e1;
       transform: none;
       text-shadow: none;
     }

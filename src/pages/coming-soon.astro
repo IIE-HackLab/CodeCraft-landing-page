@@ -4,12 +4,11 @@ import Footer from "../components/Footer.astro";
 import CustomCursor from "../components/CustomCursor.astro";
 import logoImg from "../assets/images/logo-high.png";
 import "../styles/global.css";
+import { pageKeywords, siteName, siteUrl, socialImage } from "../lib/siteConfig";
 
-const siteUrl = "https://iie-code-craft.vercel.app";
 const pageTitle = "REGISTRATION STANDBY | CODECRAFT 2026";
 const pageDescription = "Registration for CODECRAFT 2026 has not started yet. Stay tuned for further updates.";
-const pageKeywords = "CODECRAFT, CODECRAFT 2026, Register, Hackathon, IIE Tech Club";
-const socialImage = `${siteUrl}/CodeCraft.png`;
+const pageUrl = `${siteUrl}/coming-soon`;
 ---
 
 <html lang="en">
@@ -21,16 +20,16 @@ const socialImage = `${siteUrl}/CodeCraft.png`;
     <meta name="author" content="IIE Tech Club" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#020811" />
-    <link rel="canonical" href={siteUrl + "/coming-soon"} />
+    <link rel="canonical" href={pageUrl} />
     <title>{pageTitle}</title>
     
     <!-- Meta tags for social share -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="CODECRAFT" />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_IN" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
-    <meta property="og:url" content={siteUrl + "/coming-soon"} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:image:width" content="352" />
     <meta property="og:image:height" content="236" />

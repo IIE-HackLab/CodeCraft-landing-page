@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /dashboard
 
-Sitemap: https://iie-codecraft.vercel.app/sitemap.xml
+Sitemap: https://codecraft2k26.vercel.app/sitemap.xml

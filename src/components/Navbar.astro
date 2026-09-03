@@ -37,6 +37,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     <!-- Desktop nav links -->
     <nav class="nav-links" aria-label="Sections" id="nav-links-desktop">
       <a href={isComingSoon ? "/#about" : "#about"} class="nav-link" id="nl-about">About</a>
+      <a href={isComingSoon ? "/#themes" : "#themes"} class="nav-link" id="nl-themes">Themes</a>
       <a href={isComingSoon ? "/#prizes" : "#prizes"} class="nav-link" id="nl-prizes">Prizes</a>
       <a href={isComingSoon ? "/#timeline" : "#timeline"} class="nav-link" id="nl-timeline">Timeline</a>
       <a href={isComingSoon ? "/#rules" : "#rules"} class="nav-link" id="nl-rules">Rules</a>
@@ -191,12 +192,29 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#prizes" : "#prizes"}
+          href={isComingSoon ? "/#themes" : "#themes"}
           class="mob-nav-item nav-mobile-link"
-          id="ml-prizes"
+          id="ml-themes"
           style="--i:1"
         >
           <span class="mob-idx">02</span>
+          <span class="mob-label">Themes</span>
+          <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
+            ><path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </a>
+        <a
+          href={isComingSoon ? "/#prizes" : "#prizes"}
+          class="mob-nav-item nav-mobile-link"
+          id="ml-prizes"
+          style="--i:2"
+        >
+          <span class="mob-idx">03</span>
           <span class="mob-label">Prizes</span>
           <svg class="mob-arrow" viewBox="0 0 16 16" fill="none"
             ><path
@@ -211,7 +229,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           href={isComingSoon ? "/#timeline" : "#timeline"}
           class="mob-nav-item nav-mobile-link"
           id="ml-timeline"
-          style="--i:2"
+          style="--i:3"
         >
           <span class="mob-idx">03</span>
           <span class="mob-label">Timeline</span>
@@ -440,7 +458,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #cbd5e1;
     text-decoration: none;
     padding: 0.5rem 0.9rem;
     border-radius: 6px;
@@ -485,7 +503,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     font-size: 0.55rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #cbd5e1;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 999px;
@@ -523,14 +541,15 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     background: linear-gradient(135deg, #00f2fe, #4facfe);
     color: #020811;
     border: none;
-    padding: 0.55rem 1.1rem;
+    padding: 0.65rem 1.4rem;
     border-radius: 6px;
     font-family: "Orbitron", sans-serif;
-    font-weight: 700;
-    font-size: 0.62rem;
+    font-weight: 800;
+    font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
@@ -538,7 +557,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
 
   .nav-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 242, 254, 0.35);
+    box-shadow: 0 6px 24px rgba(0, 242, 254, 0.5);
   }
 
   .nav-cta-icon {
@@ -550,12 +569,13 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
   /* Hamburger */
   .nav-hamburger {
     display: none;
-    flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 0.55rem 0.65rem;
+    width: 48px;
+    height: 48px;
     cursor: pointer;
     transition: background 0.2s ease;
   }
@@ -739,8 +759,8 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 48px;
+    height: 48px;
     border: 1px solid rgba(0, 242, 254, 0.2);
     background: rgba(0, 242, 254, 0.04);
     color: rgba(240, 246, 255, 0.7);
@@ -1057,6 +1077,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     const sections = [
       "home",
       "about",
+      "themes",
       "prizes",
       "timeline",
       "rules",
@@ -1087,6 +1108,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     hamburger?.setAttribute("aria-expanded", "false");
     mobileMenu?.classList.remove("is-open");
     mobileMenu?.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
     // Move focus back to toggle button so focus isn't trapped in hidden menu
     hamburger?.focus();
   };
@@ -1097,6 +1119,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
     hamburger.setAttribute("aria-expanded", String(isOpen));
     mobileMenu?.classList.toggle("is-open", isOpen);
     mobileMenu?.setAttribute("aria-hidden", String(!isOpen));
+    document.body.style.overflow = isOpen ? "hidden" : "";
 
     if (isOpen) {
       // Focus the close button when menu opens
@@ -1115,5 +1138,12 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
   /* ── Close menu on link click ── */
   document.querySelectorAll(".nav-mobile-link").forEach((el) => {
     el.addEventListener("click", closeMenu);
+  });
+
+  /* ── Close on escape ── */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileMenu?.classList.contains("is-open")) {
+      closeMenu();
+    }
   });
 </script>
