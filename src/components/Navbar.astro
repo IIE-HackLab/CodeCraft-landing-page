@@ -1,7 +1,7 @@
 ---
 import logoImg from "../assets/images/logo-high.png";
 
-const isComingSoon = Astro.url.pathname.includes("/coming-soon");
+
 ---
 
 <header class="nav-root" id="site-nav-container">
@@ -13,7 +13,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
   >
     <!-- Logo -->
     <a
-      href={isComingSoon ? "/" : "#home"}
+      href="#home"
       class="nav-brand"
       aria-label="CodeCraft – back to top"
       id="nav-brand-link"
@@ -36,13 +36,13 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
 
     <!-- Desktop nav links -->
     <nav class="nav-links" aria-label="Sections" id="nav-links-desktop">
-      <a href={isComingSoon ? "/#about" : "#about"} class="nav-link" id="nl-about">About</a>
-      <a href={isComingSoon ? "/#themes" : "#themes"} class="nav-link" id="nl-themes">Themes</a>
-      <a href={isComingSoon ? "/#prizes" : "#prizes"} class="nav-link" id="nl-prizes">Prizes</a>
-      <a href={isComingSoon ? "/#timeline" : "#timeline"} class="nav-link" id="nl-timeline">Timeline</a>
-      <a href={isComingSoon ? "/#rules" : "#rules"} class="nav-link" id="nl-rules">Rules</a>
-      <a href={isComingSoon ? "/#submission" : "#submission"} class="nav-link" id="nl-submit">Submit</a>
-      <a href={isComingSoon ? "/#organizers" : "#organizers"} class="nav-link" id="nl-team">Team</a>
+      <a href="#about" class="nav-link" id="nl-about">About</a>
+      <a href="#themes" class="nav-link" id="nl-themes">Themes</a>
+      <a href="#prizes" class="nav-link" id="nl-prizes">Prizes</a>
+      <a href="#timeline" class="nav-link" id="nl-timeline">Timeline</a>
+      <a href="#rules" class="nav-link" id="nl-rules">Rules</a>
+      <a href="#submission" class="nav-link" id="nl-submit">Submit</a>
+      <a href="#organizers" class="nav-link" id="nl-team">Team</a>
     </nav>
 
     <!-- Right side -->
@@ -59,13 +59,13 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
       </span>
 
       <!-- Register CTA -->
-      {!isComingSoon && (
+
       <button
         class="nav-cta"
         type="button"
         data-auth-trigger
         id="nav-register-btn"
-        onclick="window.location.href = '/coming-soon'"
+        onclick="window.location.href = 'https://iiehacklab.vercel.app/'"
       >
         <span>Register</span>
         <svg
@@ -82,7 +82,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
             stroke-linejoin="round"></path>
         </svg>
       </button>
-      )}
+
 
       <!-- Hamburger (mobile) -->
       <button
@@ -175,7 +175,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
       <!-- Nav items -->
       <div class="mob-nav-list">
         <a
-          href={isComingSoon ? "/#about" : "#about"}
+          href="#about"
           class="mob-nav-item nav-mobile-link"
           id="ml-about"
           style="--i:0"
@@ -192,7 +192,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#themes" : "#themes"}
+          href="#themes"
           class="mob-nav-item nav-mobile-link"
           id="ml-themes"
           style="--i:1"
@@ -209,7 +209,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#prizes" : "#prizes"}
+          href="#prizes"
           class="mob-nav-item nav-mobile-link"
           id="ml-prizes"
           style="--i:2"
@@ -226,7 +226,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#timeline" : "#timeline"}
+          href="#timeline"
           class="mob-nav-item nav-mobile-link"
           id="ml-timeline"
           style="--i:3"
@@ -243,7 +243,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#rules" : "#rules"}
+          href="#rules"
           class="mob-nav-item nav-mobile-link"
           id="ml-rules"
           style="--i:3"
@@ -260,7 +260,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#submission" : "#submission"}
+          href="#submission"
           class="mob-nav-item nav-mobile-link"
           id="ml-submit"
           style="--i:4"
@@ -277,7 +277,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#organizers" : "#organizers"}
+          href="#organizers"
           class="mob-nav-item nav-mobile-link"
           id="ml-team"
           style="--i:5"
@@ -294,7 +294,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
           >
         </a>
         <a
-          href={isComingSoon ? "/#contact" : "#contact"}
+          href="#contact"
           class="mob-nav-item nav-mobile-link"
           id="ml-contact"
           style="--i:6"
@@ -313,13 +313,13 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
       </div>
 
       <!-- CTA -->
-      {!isComingSoon && (
+
       <div class="mob-cta-wrap">
         <button
           class="mob-cta"
           type="button"
           id="ml-register"
-          onclick="window.location.href = '/coming-soon'"
+          onclick="window.location.href = 'https://iiehacklab.vercel.app/'"
         >
           <span>Register Now</span>
           <svg
@@ -338,7 +338,7 @@ const isComingSoon = Astro.url.pathname.includes("/coming-soon");
         </button>
         <p class="mob-cta-sub">// ACCESS_LEVEL: PARTICIPANT</p>
       </div>
-      )}
+
     </nav>
   </div>
 </header>
