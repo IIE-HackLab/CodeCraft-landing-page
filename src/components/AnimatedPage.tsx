@@ -779,7 +779,7 @@ export default function AnimatedPage({
                   className="btn-hero-primary"
                   id="hero-register-btn"
                   onClick={() => {
-                    window.location.href = "https://iiehacklab.vercel.app/";
+                    window.open("https://iiehacklab.vercel.app/", "_blank");
                   }}
                   data-cursor="[ENTER]"
                 >
