@@ -6217,11 +6217,14 @@ dialog::backdrop {
 /* Grid */
 .org-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
   position: relative;
   z-index: 2;
   margin-top: 2.5rem;
+  max-width: 1180px;
+  margin-inline: auto;
+  justify-content: center;
 }
 
 /* Card */
@@ -6637,22 +6640,18 @@ dialog::backdrop {
 }
 
 /* ── Responsive ── */
-@media (max-width: 1180px) {
+@media (max-width: 1024px) {
   .org-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 320px));
+    justify-content: center;
     gap: 1.25rem;
-  }
-  .org-card:nth-child(4) {
-    grid-column: auto;
-  }
-  .org-card:nth-child(5) {
-    grid-column: auto;
   }
 }
 
 @media (max-width: 768px) {
   .org-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: center;
     gap: 1.25rem;
   }
   .org-card:last-child:nth-child(odd) {
