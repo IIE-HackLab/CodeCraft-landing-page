@@ -1902,11 +1902,6 @@ export default function AnimatedPage({
                       num: "+91 8473 868 464",
                     },
                     {
-                      tel: "+919382770196",
-                      name: "Debankan Dutta",
-                      num: "+91 9382 770 196",
-                    },
-                    {
                       tel: "+919832577462",
                       name: "Rahidul Khan",
                       num: "+91 9832 577 462",
