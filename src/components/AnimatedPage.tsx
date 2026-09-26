@@ -1596,7 +1596,7 @@ export default function AnimatedPage({
                 </div>
                 <div className="pt-list">
                   {[
-                    "Maximum 15 slides",
+                    "Maximum 5 slides",
                     "Include problem statement & solution",
                     "Add team member details",
                     "Showcase hardware-software integration",
